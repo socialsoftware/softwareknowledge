@@ -39,7 +39,7 @@ import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.jena.vocabulary.XSD;
 import org.apache.log4j.BasicConfigurator;
 
-public class exemplo {
+public class Experiment {
 
 	final private static String NS = "http://example/test#";
 	

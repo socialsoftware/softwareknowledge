@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import pt.ist.socialsoftware.softwareknowledge.jena.exemplo;
+import pt.ist.socialsoftware.softwareknowledge.jena.Experiment;
 import pt.ist.socialsoftware.softwareknowledge.utils.dto.*;
 
 @RestController
@@ -29,7 +29,7 @@ public class HomeController {
 		sourceDTO.setInsertDate("14-04-2016");
 		
 
-		exemplo ex = new exemplo();
+		Experiment ex = new Experiment();
 		//ex.teste();
 		return new ResponseEntity<SourceDTO>(sourceDTO, HttpStatus.OK);
 	}
