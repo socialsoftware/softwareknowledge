@@ -16,13 +16,13 @@ public class BasicTest {
 
 	@After
 	public void tearDown() {
-		logger.debug("setup");
+		logger.debug("tearDown");
 
 	}
 
 	@Test
 	public void basicTest() {
-		logger.debug("tearDown");
+		logger.debug("basicTest");
 
 		Experiment ex = new Experiment();
 		ex.teste();

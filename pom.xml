@@ -78,7 +78,7 @@
 					</httpConnector>
 				</configuration>
 			</plugin>
-			<plugin>
+  			<plugin>
 				<groupId>pt.ist</groupId>
 				<artifactId>ff-maven-plugin</artifactId>
 				<version>${version.fenixframework}</version>
@@ -105,7 +105,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-		</plugins>
+ 		</plugins>
 	</build>
 
 	<dependencies>
@@ -236,29 +236,17 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${version.ch.qos.logback}</version>
 		</dependency>
-		<dependency>
+ 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>apache-jena-libs</artifactId>
 			<type>pom</type>
 			<version>${version.org.apache.jena}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-databind</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-					<artifactId>jackson-core</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jdom</groupId>
 			<artifactId>jdom</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-
-
 
 
 		<dependency>

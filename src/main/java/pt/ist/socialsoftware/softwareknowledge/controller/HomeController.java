@@ -5,21 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import pt.ist.socialsoftware.softwareknowledge.jena.Experiment;
-import pt.ist.socialsoftware.softwareknowledge.utils.dto.*;
+import pt.ist.socialsoftware.softwareknowledge.utils.dto.SourceDTO;
 
 @RestController
-//@RequestMapping(value = "/home")
+// @RequestMapping(value = "/home")
 public class HomeController {
 	private static Logger log = LoggerFactory.getLogger(HomeController.class);
-	
-	@RequestMapping(value = "/home",produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+
+	@RequestMapping(value = "/home", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<SourceDTO> getHome() {
 		log.debug("getHome");
 		SourceDTO sourceDTO = new SourceDTO();
@@ -27,13 +25,10 @@ public class HomeController {
 		sourceDTO.setSourceId(1);
 		sourceDTO.setSourceName("Software Engineering");
 		sourceDTO.setInsertDate("14-04-2016");
-		
 
 		Experiment ex = new Experiment();
-		//ex.teste();
+		ex.teste();
 		return new ResponseEntity<SourceDTO>(sourceDTO, HttpStatus.OK);
 	}
-	
-	
 
 }
