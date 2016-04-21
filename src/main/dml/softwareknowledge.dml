@@ -1,0 +1,17 @@
+package pt.ist.socialsoftware.softwareknowledge.domain;
+
+
+
+class SoftwareKnowledge {
+	Integer specificationCounter;
+}
+
+relation DomainRootHasSoftwareKnowledgeApplication {
+	.pt.ist.fenixframework.DomainRoot playsRole root {
+		multiplicity 1..1;
+	}
+	SoftwareKnowledge playsRole softwareKnowledge {
+		multiplicity 0..1;
+	}
+}
+
