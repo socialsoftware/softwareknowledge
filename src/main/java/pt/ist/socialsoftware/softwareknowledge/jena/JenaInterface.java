@@ -1,5 +1,9 @@
 package pt.ist.socialsoftware.softwareknowledge.jena;
 
+import org.apache.jena.ontology.OntProperty;
+
+import pt.ist.socialsoftware.softwareknowledge.utils.dto.SourceDTO;
+
 public class JenaInterface {
 
 	static private JenaInterface instance = null;
@@ -17,6 +21,14 @@ public class JenaInterface {
 
 	public void addSource() {
 
+	}
+	
+	public void addCatToSource(){
+		
+	}
+	
+	public void addPropertytoSource(SourceDTO source,OntProperty p , String value){
+		source.addProperty(p,value);
 	}
 
 }
