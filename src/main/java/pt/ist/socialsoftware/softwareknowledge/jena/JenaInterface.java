@@ -1,7 +1,6 @@
 package pt.ist.socialsoftware.softwareknowledge.jena;
 
-import org.apache.jena.ontology.OntProperty;
-
+import pt.ist.socialsoftware.softwareknowledge.utils.dto.CategoryDTO;
 import pt.ist.socialsoftware.softwareknowledge.utils.dto.SourceDTO;
 
 public class JenaInterface {
@@ -19,16 +18,16 @@ public class JenaInterface {
 
 	}
 
-	public void addSource() {
+	public void addSource(Integer id, String name, CategoryDTO cat) {
 
 	}
 	
-	public void addCatToSource(){
+	public void addCatToSource(SourceDTO source, CategoryDTO cat){
 		
 	}
 	
-	public void addPropertytoSource(SourceDTO source,OntProperty p , String value){
+	/*public void addPropertytoSource(SourceDTO source,OntProperty p , String value){
 		source.addProperty(p,value);
-	}
+	}*/
 
 }

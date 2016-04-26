@@ -39,4 +39,8 @@ public class SourceDTO {
 		this.sourceName = sourceName;
 	}
 	
+	public SourceDTO getSource(SourceDTO s){
+		return s;
+	}
+	
 }

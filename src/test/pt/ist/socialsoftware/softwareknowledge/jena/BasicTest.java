@@ -1,5 +1,6 @@
 package pt.ist.socialsoftware.softwareknowledge.jena;
 
+import org.apache.jena.ontology.OntModelSpec;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,8 @@ public class BasicTest {
 		logger.debug("basicTest");
 
 		Experiment ex = new Experiment();
-		ex.teste();
+		OntModelSpec s = OntModelSpec.OWL_MEM_RULE_INF;
+		ex.initModel(s);
 	}
 
 }

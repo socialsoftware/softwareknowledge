@@ -10,23 +10,14 @@ package pt.ist.socialsoftware.softwareknowledge.jena;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.jena.ontology.FunctionalProperty;
 import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.ObjectProperty;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.ontology.SymmetricProperty;
-import org.apache.jena.ontology.TransitiveProperty;
 import org.apache.jena.query.DatasetAccessor;
 import org.apache.jena.query.DatasetAccessorFactory;
-import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
-import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -35,13 +26,175 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.reasoner.Reasoner;
 import org.apache.jena.reasoner.ReasonerRegistry;
-import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.jena.vocabulary.XSD;
 import org.apache.log4j.BasicConfigurator;
 
 public class Experiment {
 
 	final private static String NS = "http://example/test#";
+	
+	
+	public OntModel initModel(OntModelSpec type){
+		
+		BasicConfigurator.configure();
+		String serviceURI = "http://localhost:3030/ds/data";
+		DatasetAccessorFactory factory = null;
+		DatasetAccessor accessor;
+		accessor = factory.createHTTP(serviceURI);
+		OntModel ontModel= null;
+		final String rule = OntModelSpec.OWL_MEM_RULE_INF.toString();
+		final String rdf = OntModelSpec.OWL_MEM_RDFS_INF.toString();
+		final String micro = OntModelSpec.OWL_MEM_MICRO_RULE_INF.toString();
+		final String mini = OntModelSpec.OWL_MEM_MINI_RULE_INF.toString();
+		final String trans = OntModelSpec.OWL_MEM_TRANS_INF.toString();
+		final String rdfs = OntModelSpec.RDFS_MEM_RDFS_INF.toString();
+		String s = type.toString();
+		
+		
+	
+		
+		if(s.equals(rule)){
+			ontModel = ModelFactory.createOntologyModel(type);
+			
+		}
+		else if(s.equals(rdf)){
+			ontModel = ModelFactory.createOntologyModel(type);
+		}
+		else if(s.equals(micro)){
+			ontModel = ModelFactory.createOntologyModel(type);
+		}
+		else if(s.equals(mini)){
+			ontModel = ModelFactory.createOntologyModel(type);
+		}
+		else if(s.equals(trans)){
+			ontModel = ModelFactory.createOntologyModel(type);
+		}
+		else if(s.equals(rdfs)){
+			ontModel = ModelFactory.createOntologyModel(type);
+		}
+		else{
+			
+			throw new IllegalArgumentException();
+			
+		}
+		
+		Reasoner reasoner = ReasonerRegistry.getOWLReasoner();
+		
+		 final OntClass source = ontModel.createClass( NS + "source" );
+		 final OntClass intern = ontModel.createClass( NS + "intern" );
+		 final OntClass extern = ontModel.createClass( NS + "extern" );
+		 final OntClass category = ontModel.createClass( NS + "category");
+		 final OntClass subCategory = ontModel.createClass( NS + "subcategory");
+		    
+		    
+		 category.addSubClass(subCategory);
+		 source.addSubClass( intern );
+		 source.addSubClass( extern );
+		 intern.addDisjointWith(extern);
+		    
+		   
+		 OntProperty author = ontModel.createOntProperty(NS + "author");
+		 OntProperty sourceId = ontModel.createOntProperty( NS + "sourceid");
+		 OntProperty insertDate = ontModel.createOntProperty( NS + "date");
+		 OntProperty sourceName = ontModel.createOntProperty( NS + "name");
+		 OntProperty cite = ontModel.createOntProperty( NS + "cite");
+		 OntProperty tools = ontModel.createOntProperty( NS + "tools");
+		 OntProperty implement = ontModel.createOntProperty( NS + "implement");
+		 OntProperty define = ontModel.createOntProperty( NS + "define");
+		 OntProperty example = ontModel.createOntProperty( NS + "example");
+		 OntProperty complement = ontModel.createOntProperty( NS + "complement");
+		 OntProperty summary = ontModel.createOntProperty( NS + "summary");
+		 OntProperty deny = ontModel.createOntProperty( NS + "deny");
+		 OntProperty useCat = ontModel.createOntProperty( NS + "usecat");
+		 OntProperty catId = ontModel.createOntProperty( NS + "catid");
+		 OntProperty catName = ontModel.createOntProperty( NS + "catname");
+		 OntProperty subCatid = ontModel.createOntProperty( NS + "subCid");
+		 OntProperty subCatName = ontModel.createOntProperty(NS + "subCname");
+		    
+		 OntProperty hasCategory = ontModel.createOntProperty( NS + "hascategory");
+		 hasCategory.convertToFunctionalProperty();
+		 OntProperty hasSubCategory = ontModel.createOntProperty( NS + "hassubcategory");
+		  
+		 SymmetricProperty relatedSource =  ontModel.createSymmetricProperty( NS + "relatedsource");
+		 SymmetricProperty relationCat = ontModel.createSymmetricProperty( NS + "relationcat");
+		    
+		    
+		 author.setDomain(source);
+		 author.setRange(XSD.xstring);
+		 sourceId.setDomain(source);
+		 sourceId.setRange(XSD.integer);
+		 insertDate.setDomain(source);
+		 insertDate.setRange(XSD.xstring);
+		 sourceName.setDomain(source);
+		 sourceName.setRange(XSD.xstring);
+		 catId.setDomain(category);
+		 catId.setRange(XSD.integer);
+		 catName.setDomain(category);
+		 catName.setRange(XSD.xstring);
+		 subCatid.setDomain(subCategory);
+		 subCatid.setRange(XSD.integer);
+		 subCatName.setDomain(category);
+		 subCatName.setRange(XSD.xstring);
+		 hasCategory.setDomain(source);
+		 hasCategory.setRange(category);
+		 relatedSource.setDomain(source);
+		 relatedSource.setRange(source);
+		 relatedSource.addSubProperty(cite);
+		 relatedSource.addSubProperty(tools);
+		 relatedSource.addSubProperty(implement);
+		 relatedSource.addSubProperty(define);
+		 relatedSource.addSubProperty(example);
+		 relatedSource.addSubProperty(complement);
+		 relatedSource.addSubProperty(summary);
+		 relatedSource.addSubProperty(deny);
+		 hasSubCategory.setDomain(category);
+		 hasSubCategory.setRange(subCategory);
+		 relationCat.setDomain(category);
+		 relationCat.setRange(category);
+		 relationCat.addSubProperty(useCat);
+		
+		 return ontModel;
+	 
+		
+	}
+	
+	/*Falta conseguir aceder as propriedades do modelo
+	public void addRelatedCat(SourceDTO d){
+		 Map<String, String> map = new HashMap<>(); 
+		    
+		   
+		   if(d.hasProperty(relatedSource)){
+			   for(StmtIterator i = d.listProperties(relatedSource);i.hasNext();){
+				   Statement s3 = i.next();
+				   Resource sourceR = s3.getResource();
+			   		
+			   		
+			   		for(StmtIterator k = sourceR.listProperties(hasCategory);k.hasNext();){
+			   			Statement s2 = k.next();
+			   			String catR7 = s2.getResource().getLocalName();
+					
+			   			for(StmtIterator j = d.listProperties(hasCategory);j.hasNext();){
+							Statement s1 = j.next();
+							String catR8 = s1.getResource().getLocalName();
+							map.put(catR7, catR8);
+						}
+						
+			   		}
+			   }
+			   
+			   for (Map.Entry<String, String> entry : map.entrySet()) {
+		    	    String key = entry.getKey();
+		    	    String value = entry.getValue();
+		    	    
+		    	    d.addProperty(relationCat, key, value);
+		    	    
+		    	}
+			 
+		   }
+	}
+	
+	*/
+	
 	
 	public void teste() {
 		BasicConfigurator.configure();
