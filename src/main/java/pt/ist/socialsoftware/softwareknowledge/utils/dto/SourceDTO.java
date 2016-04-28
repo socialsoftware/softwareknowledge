@@ -13,7 +13,12 @@ public class SourceDTO {
 	  
 	  public SourceDTO(){};
 	  
-	  
+	  public SourceDTO(String author, int sourceId, String insertDate, String sourceName){
+		  this.author=author;
+		  this.sourceId=sourceId;
+		  this.insertDate=insertDate;
+		  this.sourceName=sourceName;
+	  }
 	  public String getAuthor() {
 		return author;
 	}

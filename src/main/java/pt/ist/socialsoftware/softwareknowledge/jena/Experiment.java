@@ -18,6 +18,12 @@ import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.ontology.SymmetricProperty;
 import org.apache.jena.query.DatasetAccessor;
 import org.apache.jena.query.DatasetAccessorFactory;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -158,42 +164,20 @@ public class Experiment {
 		
 	}
 	
-	/*Falta conseguir aceder as propriedades do modelo
-	public void addRelatedCat(SourceDTO d){
-		 Map<String, String> map = new HashMap<>(); 
-		    
-		   
-		   if(d.hasProperty(relatedSource)){
-			   for(StmtIterator i = d.listProperties(relatedSource);i.hasNext();){
-				   Statement s3 = i.next();
-				   Resource sourceR = s3.getResource();
-			   		
-			   		
-			   		for(StmtIterator k = sourceR.listProperties(hasCategory);k.hasNext();){
-			   			Statement s2 = k.next();
-			   			String catR7 = s2.getResource().getLocalName();
-					
-			   			for(StmtIterator j = d.listProperties(hasCategory);j.hasNext();){
-							Statement s1 = j.next();
-							String catR8 = s1.getResource().getLocalName();
-							map.put(catR7, catR8);
-						}
-						
-			   		}
-			   }
-			   
-			   for (Map.Entry<String, String> entry : map.entrySet()) {
-		    	    String key = entry.getKey();
-		    	    String value = entry.getValue();
-		    	    
-		    	    d.addProperty(relationCat, key, value);
-		    	    
-		    	}
-			 
-		   }
+	public void queryExecution(OntModel m, String search){
+		Query query = QueryFactory.create(search);
+
+    	
+    	QueryExecution qe = QueryExecutionFactory.create(query, m);
+    	ResultSet results = qe.execSelect();
+    	
+    	// Output query results	
+    	ResultSetFormatter.out(System.out, results, query);
+    	
+
+    	
+    	qe.close();
 	}
-	
-	*/
 	
 	
 	public void teste() {
