@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import pt.ist.socialsoftware.softwareknowledge.jena.Experiment;
-import pt.ist.socialsoftware.softwareknowledge.utils.dto.SourceDTO;
+import pt.ist.socialsoftware.softwareknowledge.service.ServiceInterface;
+import pt.ist.socialsoftware.softwareknowledge.service.dto.SourceDTO;
 
 @RestController
 // @RequestMapping(value = "/home")
@@ -26,8 +26,9 @@ public class HomeController {
 		sourceDTO.setSourceName("Software Engineering");
 		sourceDTO.setInsertDate("14-04-2016");
 
-		Experiment ex = new Experiment();
-		ex.teste();
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		serviceInterface.test();
+
 		return new ResponseEntity<SourceDTO>(sourceDTO, HttpStatus.OK);
 	}
 

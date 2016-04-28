@@ -1,4 +1,4 @@
-package pt.ist.socialsoftware.softwareknowledge.utils.dto;
+package pt.ist.socialsoftware.softwareknowledge.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

@@ -78,7 +78,7 @@
 					</httpConnector>
 				</configuration>
 			</plugin>
-  			<plugin>
+<!--   			<plugin>
 				<groupId>pt.ist</groupId>
 				<artifactId>ff-maven-plugin</artifactId>
 				<version>${version.fenixframework}</version>
@@ -105,7 +105,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
- 		</plugins>
+ --> 		</plugins>
 	</build>
 
 	<dependencies>
