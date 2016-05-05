@@ -23,7 +23,7 @@ public class HomeController {
 		SourceDTO sourceDTO = new SourceDTO();
 		sourceDTO.setAuthor("Antonio");
 		sourceDTO.setSourceId(1);
-		sourceDTO.setSourceName("Software Engineering");
+		sourceDTO.setName("Software Engineering");
 		sourceDTO.setInsertDate("14-04-2016");
 
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();

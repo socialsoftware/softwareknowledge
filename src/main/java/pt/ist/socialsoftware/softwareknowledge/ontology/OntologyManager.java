@@ -35,7 +35,7 @@ public class OntologyManager {
 		return ontModel;
 	}
 
-	final private static String NS = "http://example/test#";
+	final private static String NS = "http://example/test/";
 
 	static public String getNS() {
 		return NS;
@@ -76,7 +76,7 @@ public class OntologyManager {
 		}
 
 		Reasoner reasoner = ReasonerRegistry.getOWLReasoner();
-
+		InfModel infmodel = ModelFactory.createInfModel(reasoner, ontModel);
 		final OntClass source = ontModel.createClass(NS + "source");
 		final OntClass intern = ontModel.createClass(NS + "intern");
 		final OntClass extern = ontModel.createClass(NS + "extern");

@@ -7,9 +7,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.socialsoftware.softwareknowledge.ontology.OntologyInterface;
-import pt.ist.socialsoftware.softwareknowledge.ontology.OntologyManager;
-
 public class InitModelTest {
 	private static Logger logger = LoggerFactory.getLogger(InitModelTest.class);
 
@@ -37,5 +34,7 @@ public class InitModelTest {
 
 		OntologyInterface.getInstance();
 	}
+	
+	
 
 }

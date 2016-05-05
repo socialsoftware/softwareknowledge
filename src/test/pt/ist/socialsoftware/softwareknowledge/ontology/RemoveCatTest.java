@@ -1,7 +1,5 @@
 package pt.ist.socialsoftware.softwareknowledge.ontology;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import pt.ist.socialsoftware.softwareknowledge.domain.Category;
 import pt.ist.socialsoftware.softwareknowledge.domain.SoftwareKnowledge;
 
-public class AddCategoryTest {
+public class RemoveCatTest {
+
 	private static Logger logger = LoggerFactory.getLogger(AddCategoryTest.class);
 
 	private SoftwareKnowledge softwareKnowledge;
@@ -33,10 +32,14 @@ public class AddCategoryTest {
 	}
 
 	@Test
-	public void addCategorySuccessTest() {
-		ontologyInterface.addCategory(new Category(softwareKnowledge, 1, "Programming", null));
-		assertEquals("Programming", OntologyManager.getModel().getResource("/Programming").getLocalName());
+	public void removeCategorySuccessTest() {
+		
+		Category cat = new Category(softwareKnowledge, 2, "Testes", null);
+		ontologyInterface.addCategory(cat);
+		System.out.println("Inicio:" + softwareKnowledge.getCategorySet().size());
+		ontologyInterface.removeCat(cat);
+		System.out.println("Fim:" + softwareKnowledge.getCategorySet().size());
+		//assertEquals(0, softwareKnowledge.getCategorySet().size());
 		
 	}
-
 }

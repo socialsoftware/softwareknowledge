@@ -2,8 +2,10 @@ package pt.ist.socialsoftware.softwareknowledge.service;
 
 import pt.ist.socialsoftware.softwareknowledge.domain.Category;
 import pt.ist.socialsoftware.softwareknowledge.domain.SoftwareKnowledge;
+import pt.ist.socialsoftware.softwareknowledge.domain.Source;
 import pt.ist.socialsoftware.softwareknowledge.ontology.OntologyInterface;
 import pt.ist.socialsoftware.softwareknowledge.service.dto.CategoryDTO;
+import pt.ist.socialsoftware.softwareknowledge.service.dto.SourceDTO;
 
 public class ServiceInterface {
 	static private ServiceInterface instance = null;
@@ -18,7 +20,7 @@ public class ServiceInterface {
 	private ServiceInterface() {
 	}
 
-	public SoftwareKnowledge getSoftwareKnowldge() {
+	public SoftwareKnowledge getSoftwareKnowledge() {
 		return SoftwareKnowledge.getInstance();
 	}
 
@@ -28,7 +30,14 @@ public class ServiceInterface {
 	}
 
 	public Category createCategory(CategoryDTO categoryDTO) {
-		return new Category(getSoftwareKnowldge(), categoryDTO.getCatId(), categoryDTO.getName());
+		Category parent = getSoftwareKnowledge().getCategory(categoryDTO.getParent());
+		return new Category(getSoftwareKnowledge(), categoryDTO.getCatId(), categoryDTO.getName(), parent);
 	}
+	
+	public Source createSource(SourceDTO sourceDTO){
+		return new Source(getSoftwareKnowledge(), sourceDTO.getSourceId(),sourceDTO.getName(), sourceDTO.getAuthor(),sourceDTO.getInsertDate());
+	}
+	
+	
 
 }

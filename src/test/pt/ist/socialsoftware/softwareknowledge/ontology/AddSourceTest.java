@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.ist.socialsoftware.softwareknowledge.domain.Category;
 import pt.ist.socialsoftware.softwareknowledge.domain.SoftwareKnowledge;
+import pt.ist.socialsoftware.softwareknowledge.domain.Source;
 
-public class AddCategoryTest {
+public class AddSourceTest {
 	private static Logger logger = LoggerFactory.getLogger(AddCategoryTest.class);
 
 	private SoftwareKnowledge softwareKnowledge;
@@ -27,16 +27,15 @@ public class AddCategoryTest {
 	@After
 	public void tearDown() {
 		logger.debug("tearDown");
-	
 		softwareKnowledge.clean();
 		ontologyInterface.cleanResources();
 	}
 
 	@Test
-	public void addCategorySuccessTest() {
-		ontologyInterface.addCategory(new Category(softwareKnowledge, 1, "Programming", null));
-		assertEquals("Programming", OntologyManager.getModel().getResource("/Programming").getLocalName());
-		
+	public void addSourceSuccessTest() {
+		ontologyInterface.addSource(new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016"));
+		assertEquals("TestingSource", OntologyManager.getModel().getResource("/TestingSource").getLocalName());
 	}
+
 
 }

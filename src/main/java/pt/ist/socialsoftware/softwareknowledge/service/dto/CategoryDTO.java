@@ -7,6 +7,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class CategoryDTO {
 	private int catId;
 	private String name;
+	private String parent;
+
+	public String getParent() {
+		return parent;
+	}
+
+	public void setParent(String parent) {
+		this.parent = parent;
+	}
 
 	public CategoryDTO() {
 

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import pt.ist.socialsoftware.softwareknowledge.utils.exception.SKErrorType;
 import pt.ist.socialsoftware.softwareknowledge.utils.exception.SKException;
 
-public class AddCategoryTest {
+public class AddSourceTest {
 	private static Logger logger = LoggerFactory.getLogger(AddCategoryTest.class);
 
 	private SoftwareKnowledge softwareKnowledge;
@@ -26,26 +26,29 @@ public class AddCategoryTest {
 	@After
 	public void tearDown() {
 		logger.debug("tearDown");
+		// TODO: clean softwareKnowledge and ontologyInterface
 		softwareKnowledge.clean();
+		
 	}
 
 	@Test
-	public void addCategorySuccessTest() {
-		Category category = new Category(softwareKnowledge, 1, "Programming", null);
+	public void addSourceSuccessTest() {
+		Source source = new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016");
 
-		assertEquals(1, category.getCatId());
-		assertEquals("Programming", category.getName());
-		assertEquals(1, softwareKnowledge.getCategorySet().size());
+		assertEquals(1, source.getSourceId());
+		assertEquals("TestingSource", source.getName());
+		assertEquals("Rodrigo", source.getAuthor());
+		assertEquals(1, softwareKnowledge.getSourceSet().size());
 	}
 
 	@Test
-	public void addCategoryDuplicateErroeTest() {
-		new Category(softwareKnowledge, 1, "Programming", null);
+	public void addSourceDuplicateErrorTest() {
+		new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016");
 		try {
-			new Category(softwareKnowledge, 1, "Programming", null);
+			new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016");
 			fail();
 		} catch (SKException ske) {
-			assertEquals(SKErrorType.DUPLICATE_CATEGORY, ske.getError());
+			assertEquals(SKErrorType.DUPLICATE_SOURCE, ske.getError());
 		}
 	}
 

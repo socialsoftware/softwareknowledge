@@ -9,15 +9,15 @@ public class SourceDTO {
 	  private String author;
 	  private int sourceId;
 	  private String insertDate;
-	  private String sourceName;
+	  private String name;
 	  
 	  public SourceDTO(){};
 	  
-	  public SourceDTO(String author, int sourceId, String insertDate, String sourceName){
+	  public SourceDTO(String author, int sourceId, String insertDate, String name){
 		  this.author=author;
 		  this.sourceId=sourceId;
 		  this.insertDate=insertDate;
-		  this.sourceName=sourceName;
+		  this.name=name;
 	  }
 	  public String getAuthor() {
 		return author;
@@ -37,11 +37,11 @@ public class SourceDTO {
 	public void setInsertDate(String insertDate) {
 		this.insertDate = insertDate;
 	}
-	public String getSourceName() {
-		return sourceName;
+	public String getName() {
+		return name;
 	}
-	public void setSourceName(String sourceName) {
-		this.sourceName = sourceName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public SourceDTO getSource(SourceDTO s){
