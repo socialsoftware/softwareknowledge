@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntProperty;
-import org.apache.jena.rdf.model.RDFNode;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,9 +44,10 @@ public class AddPropertyToSourceTest {
 				model.getOntClass("source"));
 		OntProperty p = model.createOntProperty(OntologyManager.getNS() + "author");
 		ontologyInterface.addSource(source);
+		Integer i = source.getPropertySet().size();
 		ontologyInterface.addPropertyToSource(source, "author", "Jose");
 		
-		assertEquals(2, model.listStatements(source1, p , (RDFNode) null).toSet().size());
+		assertEquals(i+1,source.getPropertySet().size());
 		
 	}
 }

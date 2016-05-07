@@ -21,11 +21,12 @@ public class SoftwareKnowledge {
 
 	private Set<Category> categorySet = new HashSet<Category>();
 	private Set<Source> sourceSet = new HashSet<Source>();
+	private Set<Properties> propertySet = new HashSet<Properties>();
 	
-
 	public void clean() {
 		categorySet.clear();
 		sourceSet.clear();
+		propertySet.clear();
 	}
 
 	public void addCategory(Category category) {
@@ -45,8 +46,19 @@ public class SoftwareKnowledge {
 		}
 		
 		sourceSet.add(source);
+		
+		
 	}
 	
+	/*public void addPropertyToSource(Source source, String property, String value){
+		
+		Set<Properties> propertiesSet =source.getPropertySet(); 
+		Properties p = new Properties(property,value);
+		propertiesSet.add(p);
+	}*/
+	
+		
+		
 	
 	
 	public Category getCategory(String name){
@@ -63,6 +75,22 @@ public class SoftwareKnowledge {
 		
 	}
 	
+
+	public Set<Properties> getPropertySet() {
+		return propertySet;
+	}
+
+	public void setPropertySet(Set<Properties> propertySet) {
+		this.propertySet = propertySet;
+	}
+
+	public void setCategorySet(Set<Category> categorySet) {
+		this.categorySet = categorySet;
+	}
+
+	public void setSourceSet(Set<Source> sourceSet) {
+		this.sourceSet = sourceSet;
+	}
 
 	public Set<Category> getCategorySet() {
 		return categorySet;

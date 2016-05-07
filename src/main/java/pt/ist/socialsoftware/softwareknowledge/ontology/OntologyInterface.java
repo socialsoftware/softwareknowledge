@@ -13,6 +13,7 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 
 import pt.ist.socialsoftware.softwareknowledge.domain.Category;
+import pt.ist.socialsoftware.softwareknowledge.domain.Properties;
 import pt.ist.socialsoftware.softwareknowledge.domain.SoftwareKnowledge;
 import pt.ist.socialsoftware.softwareknowledge.domain.Source;
 
@@ -54,6 +55,7 @@ public class OntologyInterface {
 
 	public void addSource(Source source) {
 		OntModel model = OntologyManager.getModel();
+		Set<Properties> propertiesSet =source.getPropertySet(); 
 		final Individual source1 = model.createIndividual(OntologyManager.getNS() + source.getName(), 
 				model.getOntClass("source"));
 		OntProperty id = model.createOntProperty(OntologyManager.getNS() + "sourceid");
@@ -64,6 +66,16 @@ public class OntologyInterface {
 		source1.addProperty(name, source.getName());
 		source1.addProperty(author, source.getAuthor());
 		source1.addProperty(date, source.getInsertDate());
+		Properties idS = new Properties(id, String.valueOf(source.getSourceId()));
+		Properties nameS = new Properties(name,source.getName());
+		Properties authorS = new Properties(author, source.getAuthor());
+		Properties dateS = new Properties(date, source.getInsertDate());
+		
+		propertiesSet.add(idS);
+		propertiesSet.add(nameS);
+		propertiesSet.add(authorS);
+		propertiesSet.add(dateS);
+		
 		
 		
 	}
@@ -71,12 +83,14 @@ public class OntologyInterface {
 	
 	public void addPropertyToSource(Source source,String property , String value){ 
 		OntModel model = OntologyManager.getModel();
+		Set<Properties> propertiesSet =source.getPropertySet();
 		final Individual source1 = model.createIndividual(OntologyManager.getNS() + source.getName(), 
 				model.getOntClass("source"));
 		
 		OntProperty p = model.createOntProperty(OntologyManager.getNS() + property);
 		source1.addProperty(p,value); 
-		
+		Properties prop = new Properties(p,value);
+		propertiesSet.add(prop);
 	}
 	 
 	public void addSubToCat(Category category){

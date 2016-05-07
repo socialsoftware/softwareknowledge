@@ -1,6 +1,6 @@
 package pt.ist.socialsoftware.softwareknowledge.domain;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import pt.ist.socialsoftware.softwareknowledge.ontology.OntologyInterface;
@@ -9,12 +9,16 @@ import pt.ist.socialsoftware.softwareknowledge.service.dto.SourceDTO;
 public class Source {
 	private SoftwareKnowledge softwareknowledge;
 	private String author;
-	private int sourceId;
+	private Integer sourceId;
 	private String insertDate;
 	private String name;
-	private Set<Category> catInSourceSet = Collections.<Category>emptySet();
+	private Set<Category> catInSourceSet;
+	private Set<Properties> propertySet;
 	
 	
+	
+	
+
 	public Source(){}
 	
 	
@@ -24,6 +28,8 @@ public class Source {
 		setName(name);
 		setInsertDate(insertDate);
 		setAuthor(author);
+		catInSourceSet = new HashSet<Category>();
+		propertySet = new HashSet<Properties>();
 		softwareKnowledge.addSource(this);
 		OntologyInterface.getInstance().addSource(this);
 	}
@@ -47,7 +53,7 @@ public class Source {
 		return sourceId;
 	}
 
-	public void setSourceId(int sourceId) {
+	public void setSourceId(Integer sourceId) {
 		this.sourceId = sourceId;
 	}
 
@@ -85,13 +91,22 @@ public class Source {
 	public void setCatInSourceSet(Set<Category> catInSourceSet) {
 		this.catInSourceSet = catInSourceSet;
 	}
+	
+	public Set<Properties> getPropertySet() {
+		return propertySet;
+	}
+
+
+	public void setPropertySet(Set<Properties> propertySet) {
+		this.propertySet = propertySet;
+	}
 
 	public SourceDTO getDTO() {
 	
 		return new SourceDTO(getAuthor(),getSourceId(), getInsertDate(), getName());
 		
 	}
-
+	
 	
 	
 }

@@ -1,6 +1,5 @@
 package pt.ist.socialsoftware.softwareknowledge.domain;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +12,7 @@ public class Category {
 	private String name;
 	private Set<Category> subCategorySet;
 	private Category parent;
-	private Set<Source> sourceWithCatSet = Collections.<Source>emptySet();;
+	private Set<Source> sourceWithCatSet;
 
 	
 
@@ -24,6 +23,7 @@ public class Category {
 		setName(name);
 		softwareKnowledge.addCategory(this);
 		subCategorySet = new HashSet<Category>();
+		sourceWithCatSet = new HashSet<Source>();
 		OntologyInterface.getInstance().addCategory(this);
 		if(parent != null){
 			parent.addSub(this);
