@@ -13,7 +13,7 @@ public class Source {
 	private String insertDate;
 	private String name;
 	private Set<Category> catInSourceSet;
-	private Set<Properties> propertySet;
+	private Set<RelatedSource> relatedSourceSet;
 	
 	
 	
@@ -29,7 +29,7 @@ public class Source {
 		setInsertDate(insertDate);
 		setAuthor(author);
 		catInSourceSet = new HashSet<Category>();
-		propertySet = new HashSet<Properties>();
+		relatedSourceSet = new HashSet<RelatedSource>();
 		softwareKnowledge.addSource(this);
 		OntologyInterface.getInstance().addSource(this);
 	}
@@ -92,15 +92,22 @@ public class Source {
 		this.catInSourceSet = catInSourceSet;
 	}
 	
-	public Set<Properties> getPropertySet() {
-		return propertySet;
+	
+
+	public Set<RelatedSource> getRelatedSourceSet() {
+		return relatedSourceSet;
 	}
 
 
-	public void setPropertySet(Set<Properties> propertySet) {
-		this.propertySet = propertySet;
+	public void setRelatedSourceSet(Set<RelatedSource> relatedSourceSet) {
+		this.relatedSourceSet = relatedSourceSet;
 	}
 
+	
+	public void addRelatedSource(Source source, SourceProperty property){
+		RelatedSource rs = new RelatedSource(this,source,property);
+		this.getRelatedSourceSet().add(rs);
+	}
 	public SourceDTO getDTO() {
 	
 		return new SourceDTO(getAuthor(),getSourceId(), getInsertDate(), getName());

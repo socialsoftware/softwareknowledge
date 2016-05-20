@@ -147,8 +147,9 @@ public class OntologyManager {
 		relationCat.setRange(category);
 		relationCat.addSubProperty(useCat);
 
+		accessor.putModel(ontModel);
 		return ontModel;
-
+		
 	}
 
 	public void queryExecution(OntModel m, String search) {
@@ -532,21 +533,9 @@ public class OntologyManager {
 				+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" + "SELECT ?x " + "WHERE {"
 				+ "       ?x rdf:type j.0:extern" + ".}  ";
 
-		/*
-		 * Query query = QueryFactory.create(query7);
-		 * 
-		 * // Execute the query and obtain results QueryExecution qe =
-		 * QueryExecutionFactory.create(query, ontModel); ResultSet results =
-		 * qe.execSelect();
-		 * 
-		 * // Output query results ResultSetFormatter.out(System.out, results,
-		 * query);
-		 * 
-		 * 
-		 * // Important - free up resources used running the query qe.close();
-		 */
+		
 
 		// ontModel.write( System.out, "RDF/XML" );
-		// accessor.putModel(ontModel);
+		
 	}
 }

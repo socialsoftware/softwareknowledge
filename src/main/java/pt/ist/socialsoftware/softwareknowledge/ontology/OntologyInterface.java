@@ -8,12 +8,12 @@ import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.ontology.OntProperty;
+import org.apache.jena.ontology.SymmetricProperty;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 
 import pt.ist.socialsoftware.softwareknowledge.domain.Category;
-import pt.ist.socialsoftware.softwareknowledge.domain.Properties;
 import pt.ist.socialsoftware.softwareknowledge.domain.SoftwareKnowledge;
 import pt.ist.socialsoftware.softwareknowledge.domain.Source;
 
@@ -55,7 +55,7 @@ public class OntologyInterface {
 
 	public void addSource(Source source) {
 		OntModel model = OntologyManager.getModel();
-		Set<Properties> propertiesSet =source.getPropertySet(); 
+		
 		final Individual source1 = model.createIndividual(OntologyManager.getNS() + source.getName(), 
 				model.getOntClass("source"));
 		OntProperty id = model.createOntProperty(OntologyManager.getNS() + "sourceid");
@@ -66,32 +66,11 @@ public class OntologyInterface {
 		source1.addProperty(name, source.getName());
 		source1.addProperty(author, source.getAuthor());
 		source1.addProperty(date, source.getInsertDate());
-		Properties idS = new Properties(id, String.valueOf(source.getSourceId()));
-		Properties nameS = new Properties(name,source.getName());
-		Properties authorS = new Properties(author, source.getAuthor());
-		Properties dateS = new Properties(date, source.getInsertDate());
-		
-		propertiesSet.add(idS);
-		propertiesSet.add(nameS);
-		propertiesSet.add(authorS);
-		propertiesSet.add(dateS);
-		
 		
 		
 	}
 
 	
-	public void addPropertyToSource(Source source,String property , String value){ 
-		OntModel model = OntologyManager.getModel();
-		Set<Properties> propertiesSet =source.getPropertySet();
-		final Individual source1 = model.createIndividual(OntologyManager.getNS() + source.getName(), 
-				model.getOntClass("source"));
-		
-		OntProperty p = model.createOntProperty(OntologyManager.getNS() + property);
-		source1.addProperty(p,value); 
-		Properties prop = new Properties(p,value);
-		propertiesSet.add(prop);
-	}
 	 
 	public void addSubToCat(Category category){
 		OntModel model = OntologyManager.getModel();
@@ -173,12 +152,36 @@ public class OntologyInterface {
 		}
 	}*/
 
+	public void addRelatedCategory(Category c1, Category c2){
+		OntModel model = OntologyManager.getModel();
+		final Individual cat1 = model.createIndividual(OntologyManager.getNS() + c1.getName(), 
+				model.getOntClass("category"));
+		final Individual cat2 = model.createIndividual(OntologyManager.getNS() + c2.getName(),
+				model.getOntClass("category"));
+		
+		SymmetricProperty sp = model.getSymmetricProperty(OntologyManager.getNS() + "relatedcat");
+		cat1.addProperty(sp,cat2);
+	}
+	
+	
+	public void addRelatedSource(Source s1, Source s2){
+		OntModel model = OntologyManager.getModel();
+		final Individual source1 = model.createIndividual(OntologyManager.getNS() + s1.getName(), 
+				model.getOntClass("source"));
+		final Individual source2 = model.createIndividual(OntologyManager.getNS() + s2.getName(),
+				model.getOntClass("source"));
+		SymmetricProperty sp = model.getSymmetricProperty(OntologyManager.getNS() + "relatedsource");
+		source1.addProperty(sp, source2);
+	}
+	
 	public void removeSource(Source source) {
 		OntModel model = OntologyManager.getModel(); 
 		final Individual source1 = model.createIndividual(OntologyManager.getNS() + source.getName(), 
 				model.getOntClass("source"));
-		
-		source1.removeProperties();
+		//Object
+		model.removeAll(null, null, source1);
+		//Subject
+		model.removeAll(source1, null, null);
 	}
 	
 	
@@ -188,7 +191,7 @@ public class OntologyInterface {
 		Resource cat1 = model.createResource(OntologyManager.getNS() + category.getName(), 
 						model.getOntClass("category"));
 		
-		 cat1.removeProperties();
+		model.removeAll(null, null, cat1);
 			
 	}
 	
