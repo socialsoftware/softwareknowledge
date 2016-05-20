@@ -1,28 +1,17 @@
 <!doctype html>
-<html data-ng-app="">
+<html>
 <head>
-	<script src = "js/angular.min.js"></script>
-	<script src = "js/angular-animate.js"></script>
-	<script src = "js/angular-route.js"></script>
-	<script type="text/javascript" src="app/controllers/softKnowledgeController.js"></script>
+<script src="assets/libs/angular.min.js"></script>
+<script src="assets/libs/angular-animate.js"></script>
+<script src="assets/libs/angular-route.js"></script>
+<script src="https://npmcdn.com/@angular/router@0.2.0/angular1/angular_1_router.js"></script>
+<script type="text/javascript" src="app/components/app/app.js"></script>
+<script type="text/javascript" src="app/components/app/categories/categories.js"></script>
 </head>
 
-	<body>
-	<div ng-app="softKnowledgeManager" ng-controller="SoftKnowledgeController">
-		<h2>Total:{{total}}</h2>
-	</div> 
-	
+<body ng-app="app">
+	<h1 class="title">Software Knowledge Repository</h1>
+	<app></app>
+</body>
 
-
-
-
-
-
-
-
-
-	<script src="app/softKnowledgeManager.js"></script>
-	
-	<script src="app/controllers/softKnowledgeController.js"></script>
-	</body>
 </html>
