@@ -1,5 +1,7 @@
 package pt.ist.socialsoftware.softwareknowledge.service;
 
+import java.util.Set;
+
 import pt.ist.socialsoftware.softwareknowledge.domain.Category;
 import pt.ist.socialsoftware.softwareknowledge.domain.SoftwareKnowledge;
 import pt.ist.socialsoftware.softwareknowledge.domain.Source;
@@ -33,11 +35,20 @@ public class ServiceInterface {
 		Category parent = getSoftwareKnowledge().getCategory(categoryDTO.getParent());
 		return new Category(getSoftwareKnowledge(), categoryDTO.getCatId(), categoryDTO.getName(), parent);
 	}
-	
-	public Source createSource(SourceDTO sourceDTO){
-		return new Source(getSoftwareKnowledge(), sourceDTO.getSourceId(),sourceDTO.getName(), sourceDTO.getAuthor(),sourceDTO.getInsertDate());
+
+	public Source createSource(SourceDTO sourceDTO) {
+		return new Source(getSoftwareKnowledge(), sourceDTO.getSourceId(), sourceDTO.getName(), sourceDTO.getAuthor(),
+				sourceDTO.getInsertDate());
 	}
-	
-	
+
+	public Set<Category> getCategories() {
+		return getSoftwareKnowledge().getCategorySet();
+
+	}
+
+	public Category getCategory(String catId) {
+		// TODO NAME...
+		return getSoftwareKnowledge().getCategory(catId);
+	}
 
 }

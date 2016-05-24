@@ -1,85 +1,108 @@
-var categories = angular.module('categories', [])
+angular.module('categories', []).service('categoryService', CategoryService)
+		//.service('categoryRepository', categoryRepository)
 
-.component('categories', {
-	template : '<h2>Categories</h2><ng-outlet></ng-outlet>',
-	$routeConfig : [ 
-	{
-		path : '/',
-		name : 'CategoryList',
-		component : 'categoryList',
-		useAsDefault : true
-	},
-	{
-		path : '/:id',
-		name : 'CategoryDetail',
-		component : 'categoryDetail',
-	}
-	
-	]
-})
+		.component('categories', {
+			template : '<h2>Categories</h2><ng-outlet></ng-outlet>',
+			$routeConfig : [ {
+				path : '/',
+				name : 'CategoryList',
+				component : 'categoryList',
+				useAsDefault : true
+			}, {
+				path : '/:id',
+				name : 'CategoryDetail',
+				component : 'categoryDetail'
+			} ]
+		})
 
-.component('categoryList', {
-	templateUrl : "app/components/app/categories/categoryList.html",
-	controller : CategoryListComponent
-})
+		.component('categoryList', {
+			templateUrl : "app/components/app/categories/categoryList.html",
+			controller : CategoryListComponent
+		})
 
-.component('categoryDetail', {
-	templateUrl : "app/components/app/categories/categoryDetail.html",
-	controller : CategoryDetailComponent
-})
+		.component('categoryDetail', {
+			templateUrl : "app/components/app/categories/categoryDetail.html",
+			bindings : {
+				$router : '<'
+			},
+			controller : CategoryDetailComponent
+		});
 
-
-function CategoryService($q){
+function CategoryService($q) {
 	var categoriesPromise = $q.when([ {
-		id : 11,
+		catId : 11,
 		name : 'Requirements'
 	}, {
-		id : 12,
+		catId : 12,
 		name : 'Test'
 	}, {
-		id : 13,
+		catId : 13,
 		name : 'Refactor'
 	}, {
-		id : 14,
+		catId : 14,
 		name : 'Design'
 	} ]);
 
 	this.getCategories = function() {
 		return categoriesPromise;
 	};
-	
-	this.getCategory = function(id) {
-		return categoriesPromise.then(function(categories){
-			for(var i =0; i<categories.lenght;i++) {
-				if(categories[i].id == id) return categories[i];
+
+	this.getCategory = function(catId) {
+		return categoriesPromise.then(function(categories) {
+			for (var i = 0; i < categories.length; i++) {
+				if (categories[i].catId == catId)
+					return categories[i];
 			}
-		})
-	};
-	
-}
-
-function CategoryListComponent(categoryService) {
-	var $ctrl = this;
-
-	this.$routerOnActivate = function(next) {
-		categoryService.getCategories().then(function(categories) {
-			$ctrl.categories = categories;
 		});
 	};
 
 }
 
-function CategoryDetailComponent(categoryService){
+function CategoryListComponent(categoryService, categoryRepository) {
 	var $ctrl = this;
-	
-	this.$routerOnActivate = function(next, previous){
-		var id = next.params.id;
-		  return categoryService.getCategory(id).then(function(categories) {
-		    $ctrl.category = category;
-		  });
+
+	this.name = 1;
+	this.catId = 1;
+
+	this.$routerOnActivate = function() {
+		categoryService.getCategories().then(function(categories) {
+			$ctrl.categories = categories;
+		});
 	};
-	
-	this.gotoCategory = function() {
-		  this.$router.navigate(['CategoryList']);
-		};
+
+	this.isSelected = function(category) {
+		return (category.catId == selectedId);
+	};
+
+	this.createCategory = function() {
+		this.name = this.name + 1;
+		this.catId = this.catId + 1;
+		categoryRepository.createCategory({
+			"name" : this.name,
+			"catId" : this.catId
+		}).then(function(response) {
+			alert("ok")
+		}, function(response) {
+			alert(response.data.type + '(' + response.data.value + ')');
+		});	
+	}
+}
+
+function CategoryDetailComponent(categoryService) {
+	var $ctrl = this;
+
+	this.$routerOnActivate = function(next) {
+		// Get the category identified by the route parameter
+		var catId = next.params.id;
+		categoryService.getCategory(catId).then(function(category) {
+			$ctrl.category = category;
+		});
+	};
+
+	this.gotoCategories = function() {
+		var categoryCatId = this.category && this.category.catId;
+		this.$router.navigate([ 'CategoryList', {
+			catId : categoryCatId
+		} ]);
+	};
 }

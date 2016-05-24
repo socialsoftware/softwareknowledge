@@ -1,4 +1,4 @@
-angular.module('app', [ 'ngComponentRouter', 'categories' ])
+var app = angular.module('app', [ 'ngComponentRouter', 'categories' ])
 
 .config(function($locationProvider) {
 	$locationProvider.html5Mode(true);
@@ -11,7 +11,6 @@ angular.module('app', [ 'ngComponentRouter', 'categories' ])
 	$routeConfig : [ {
 		path : '/categories/...',
 		name : 'Categories',
-		component : 'categories',
-		useAsDefault : true
+		component : 'categories'
 	}]
 });

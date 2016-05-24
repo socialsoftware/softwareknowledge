@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,16 +21,33 @@ public class CategoryController {
 	private static Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public ResponseEntity<CategoryDTO> createCategory() {
-		logger.debug("createCategory");
-		// public ResponseEntity<CategoryDTO> createCategory(@RequestBody
-		// CategoryDTO categoryDTO) {
+	public ResponseEntity<CategoryDTO[]> getCategories() {
+		logger.debug("getCategories");
 
-		CategoryDTO categoryDTO = new CategoryDTO(2, "tabem");
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		CategoryDTO[] categories = serviceInterface.getCategories().stream().map(c -> c.getDTO())
+				.toArray(size -> new CategoryDTO[size]);
+
+		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public ResponseEntity<CategoryDTO> getCategory(@PathVariable("id") String catId) {
+		logger.debug("getCategory catId:{}", catId);
+
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		CategoryDTO categoryDTO = serviceInterface.getCategory(catId).getDTO();
+
+		return new ResponseEntity<CategoryDTO>(categoryDTO, HttpStatus.OK);
+	}
+
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
+		logger.debug("createCategory name:{}, catId:{}", categoryDTO.getName(), categoryDTO.getCatId());
 
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
 		Category category = serviceInterface.createCategory(categoryDTO);
 
-		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.OK);
+		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.CREATED);
 	}
 }

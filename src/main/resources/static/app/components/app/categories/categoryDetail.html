@@ -1,0 +1,11 @@
+<div ng-if="$ctrl.category">
+	<h3>{{$ctrl.category.name}}</h3>
+	<div>
+		<label>Id: </label>{{$ctrl.category.catId}}
+	</div>
+	<div>
+		<label>Name: </label> <input ng-model="$ctrl.category.name"
+			placeholder="name" />
+	</div>
+	<button ng-click="$ctrl.gotoCategories()">Back</button>
+</div>
