@@ -1,4 +1,5 @@
-var app = angular.module('app', [ 'ngComponentRouter', 'categories' ])
+var app = angular.module('app', [ 'ngComponentRouter', 'categories'])
+//var app = angular.module('app', [ 'ngComponentRouter', 'categories', 'sources'])
 
 .config(function($locationProvider) {
 	$locationProvider.html5Mode(true);

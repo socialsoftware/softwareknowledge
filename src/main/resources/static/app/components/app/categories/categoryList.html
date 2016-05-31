@@ -1,4 +1,5 @@
-<button ng-click="$ctrl.createCategory()">Create</button>
+<button ng-link="['CategoryForm']">Add New Category</button>
+
 <div ng-repeat="category in $ctrl.categories">
 	<a ng-link="['CategoryDetail', {id: category.catId}]">{{category.name}}</a>
 </div>

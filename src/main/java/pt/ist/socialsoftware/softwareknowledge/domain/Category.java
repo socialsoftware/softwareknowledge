@@ -63,6 +63,8 @@ public class Category {
 		OntologyInterface.getInstance().addCategory(this);
 	}
 
+	
+
 	public SoftwareKnowledge getSoftwareKnowledge() {
 		return softwareKnowledge;
 	}

@@ -40,7 +40,7 @@ public class CategoryController {
 
 		return new ResponseEntity<CategoryDTO>(categoryDTO, HttpStatus.OK);
 	}
-
+/*
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
 		logger.debug("createCategory name:{}, catId:{}", categoryDTO.getName(), categoryDTO.getCatId());
@@ -49,5 +49,17 @@ public class CategoryController {
 		Category category = serviceInterface.createCategory(categoryDTO);
 
 		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.CREATED);
+	}*/
+	
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
+		logger.debug("createCategory name:{}, catId:{}, parentId:{}", categoryDTO.getName(), categoryDTO.getCatId(),categoryDTO.getParentId());
+
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		Category category = serviceInterface.createCategory(categoryDTO);
+
+		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.CREATED);
 	}
+	
+	
 }

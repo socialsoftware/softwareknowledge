@@ -8,6 +8,28 @@ public class CategoryDTO {
 	private int catId;
 	private String name;
 	private String parent;
+	private int parentId;
+
+	/*
+	public CategoryDTO(int catId, String name, int parentId) {
+		this.catId = catId;
+		this.name = name;
+		this.parentId = parentId;
+	}*/
+	public CategoryDTO() {
+
+	}
+	public CategoryDTO(int catId, String name) {
+		this.catId = catId;
+		this.name = name;
+	}
+	public int getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
+	}
 
 	public String getParent() {
 		return parent;
@@ -17,14 +39,6 @@ public class CategoryDTO {
 		this.parent = parent;
 	}
 
-	public CategoryDTO() {
-
-	}
-
-	public CategoryDTO(int catId, String name) {
-		this.catId = catId;
-		this.name = name;
-	}
 
 	public int getCatId() {
 		return catId;

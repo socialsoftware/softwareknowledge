@@ -14,3 +14,6 @@ app.factory('categoryRepository', function($http) {
 		}
 	};
 });
+
+
+

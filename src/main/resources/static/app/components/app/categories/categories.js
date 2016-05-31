@@ -1,6 +1,6 @@
-angular.module('categories', []).service('categoryService', CategoryService)
+angular.module('categories', [])
 		//.service('categoryRepository', categoryRepository)
-
+		//service('categoryService', CategoryService)
 		.component('categories', {
 			template : '<h2>Categories</h2><ng-outlet></ng-outlet>',
 			$routeConfig : [ {
@@ -12,7 +12,12 @@ angular.module('categories', []).service('categoryService', CategoryService)
 				path : '/:id',
 				name : 'CategoryDetail',
 				component : 'categoryDetail'
-			} ]
+			},
+			{
+				path : '/catForm',
+				name : 'CategoryForm',
+				component : 'categoryForm'
+			}]
 		})
 
 		.component('categoryList', {
@@ -26,9 +31,14 @@ angular.module('categories', []).service('categoryService', CategoryService)
 				$router : '<'
 			},
 			controller : CategoryDetailComponent
+		})
+
+		.component('categoryForm',{
+			templateUrl : "app/components/app/categories/categoryForm.html",
+			controller : CategoryFormComponent
 		});
 
-function CategoryService($q) {
+/*function CategoryService($q) {
 	var categoriesPromise = $q.when([ {
 		catId : 11,
 		name : 'Requirements'
@@ -56,16 +66,16 @@ function CategoryService($q) {
 		});
 	};
 
-}
+}*/
 
-function CategoryListComponent(categoryService, categoryRepository) {
+function CategoryListComponent(categoryRepository) {
 	var $ctrl = this;
 
 	this.name = 1;
 	this.catId = 1;
 
 	this.$routerOnActivate = function() {
-		categoryService.getCategories().then(function(categories) {
+		categoryRepository.getCategories().then(function(categories) {
 			$ctrl.categories = categories;
 		});
 	};
@@ -74,27 +84,18 @@ function CategoryListComponent(categoryService, categoryRepository) {
 		return (category.catId == selectedId);
 	};
 
-	this.createCategory = function() {
-		this.name = this.name + 1;
-		this.catId = this.catId + 1;
-		categoryRepository.createCategory({
-			"name" : this.name,
-			"catId" : this.catId
-		}).then(function(response) {
-			alert("ok")
-		}, function(response) {
-			alert(response.data.type + '(' + response.data.value + ')');
-		});	
-	}
+	
+	
+	
 }
 
-function CategoryDetailComponent(categoryService) {
+function CategoryDetailComponent(categoryRepository) {
 	var $ctrl = this;
 
 	this.$routerOnActivate = function(next) {
 		// Get the category identified by the route parameter
 		var catId = next.params.id;
-		categoryService.getCategory(catId).then(function(category) {
+		categoryRepository.getCategory(catId).then(function(category) {
 			$ctrl.category = category;
 		});
 	};
@@ -104,5 +105,33 @@ function CategoryDetailComponent(categoryService) {
 		this.$router.navigate([ 'CategoryList', {
 			catId : categoryCatId
 		} ]);
+	};
+}
+
+function CategoryFormComponent(categoryRepository){
+	var $ctrl = this;
+	
+	this.name = $ctrl.name;
+	this.catId =null;
+	
+	this.$routerOnActivate = function() {
+		categoryRepository.getCategories().then(function(categories) {
+			$ctrl.categories = categories;
+		});
+	}
+	
+	this.createCategory = function() {
+		this.name = $ctrl.name;
+		this.catId = null;
+		//this.parentId = 
+		categoryRepository.createCategory({
+			"name" : this.name,
+			"catId" : this.catId,
+			"parentId" : this.parentId
+		}).then(function(response) {
+			categoryRepository.getCategories();
+		}, function(response) {
+			alert(response.data.type + '(' + response.data.value + ')');
+		});	
 	};
 }

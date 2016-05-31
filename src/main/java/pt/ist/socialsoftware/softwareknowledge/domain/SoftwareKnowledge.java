@@ -81,6 +81,15 @@ public class SoftwareKnowledge {
 		return null;
 	}
 	
+	public Category getCategory(int catId){
+		for(Category c : getCategorySet()){
+			if(c.getCatId() == catId){
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	public Source getSource(String name){
 		return	getSourceSet().stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
 		

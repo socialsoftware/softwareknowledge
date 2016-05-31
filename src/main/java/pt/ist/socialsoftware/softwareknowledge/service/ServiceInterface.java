@@ -32,7 +32,7 @@ public class ServiceInterface {
 	}
 
 	public Category createCategory(CategoryDTO categoryDTO) {
-		Category parent = getSoftwareKnowledge().getCategory(categoryDTO.getParent());
+		Category parent = getSoftwareKnowledge().getCategory(categoryDTO.getParentId());
 		return new Category(getSoftwareKnowledge(), categoryDTO.getCatId(), categoryDTO.getName(), parent);
 	}
 
@@ -46,9 +46,11 @@ public class ServiceInterface {
 
 	}
 
-	public Category getCategory(String catId) {
-		// TODO NAME...
+	public Category getCategory(int catId) {
 		return getSoftwareKnowledge().getCategory(catId);
 	}
-
+	
+	public Category getCategory(String name) {
+		return getSoftwareKnowledge().getCategory(name);
+	}
 }
