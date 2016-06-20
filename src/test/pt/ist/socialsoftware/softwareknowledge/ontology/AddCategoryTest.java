@@ -34,7 +34,7 @@ public class AddCategoryTest {
 
 	@Test
 	public void addCategorySuccessTest() {
-		ontologyInterface.addCategory(new Category(softwareKnowledge, 1, "Programming", null));
+		ontologyInterface.addCategory(new Category(softwareKnowledge, "Programming", null));
 		assertEquals("Programming", OntologyManager.getModel().getResource("/Programming").getLocalName());
 		
 	}

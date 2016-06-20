@@ -33,7 +33,7 @@ public class AddSourceTest {
 
 	@Test
 	public void addSourceSuccessTest() {
-		Source source = new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016");
+		Source source = new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016","http");
 
 		assertEquals(1, source.getSourceId());
 		assertEquals("TestingSource", source.getName());
@@ -43,9 +43,9 @@ public class AddSourceTest {
 
 	@Test
 	public void addSourceDuplicateErrorTest() {
-		new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016");
+		new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016","http");
 		try {
-			new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016");
+			new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016","http");
 			fail();
 		} catch (SKException ske) {
 			assertEquals(SKErrorType.DUPLICATE_SOURCE, ske.getError());

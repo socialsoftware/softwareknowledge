@@ -22,10 +22,22 @@ public class CategoryController {
 
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<CategoryDTO[]> getCategories() {
-		logger.debug("getCategories");
+		
+		
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		logger.debug("getCategories values:{}", serviceInterface.getCategories());
+		CategoryDTO[] categories = serviceInterface.getCategories().stream().map(c -> c.getDTO())
+				.toArray(size -> new CategoryDTO[size]);
+
+		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/{id}/sub", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public ResponseEntity<CategoryDTO[]> getSubCategories(@PathVariable("id") int catId) {
+		logger.debug("getSubCategoriescatId:{}", catId);
 
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
-		CategoryDTO[] categories = serviceInterface.getCategories().stream().map(c -> c.getDTO())
+		CategoryDTO[] categories = serviceInterface.getSubCategories(catId).stream().map(c -> c.getDTO())
 				.toArray(size -> new CategoryDTO[size]);
 
 		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
@@ -40,26 +52,18 @@ public class CategoryController {
 
 		return new ResponseEntity<CategoryDTO>(categoryDTO, HttpStatus.OK);
 	}
-/*
-	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
-		logger.debug("createCategory name:{}, catId:{}", categoryDTO.getName(), categoryDTO.getCatId());
 
-		ServiceInterface serviceInterface = ServiceInterface.getInstance();
-		Category category = serviceInterface.createCategory(categoryDTO);
-
-		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.CREATED);
-	}*/
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
 		logger.debug("createCategory name:{}, catId:{}, parentId:{}", categoryDTO.getName(), categoryDTO.getCatId(),categoryDTO.getParentId());
-
+		
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
 		Category category = serviceInterface.createCategory(categoryDTO);
 
 		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.CREATED);
 	}
+	
 	
 	
 }

@@ -1,0 +1,5 @@
+<button ng-link="['SourceForm']">Add New Source</button>
+
+<div ng-repeat="source in $ctrl.sources">
+	<a ng-link="['SourceDetail', {id: source.sourceId}]">{{source.name}}</a>
+</div>

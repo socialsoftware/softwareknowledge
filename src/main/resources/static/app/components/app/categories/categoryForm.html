@@ -1,7 +1,7 @@
 <form novalidate class="simple-form">
     Category Name: <input type="text" ng-model="$ctrl.name" /><br />
     Category Parent:  
-    <select ng-options="category.name for category in $ctrl.categories" ng-model="$ctrl.categories">
+    <select ng-options="category.name for category in $ctrl.categories" ng-model="$ctrl.selectedCategory">
       <option value="">Select Category Parent</option>
     </select>     
    <button ng-click="$ctrl.createCategory()">Create</button>

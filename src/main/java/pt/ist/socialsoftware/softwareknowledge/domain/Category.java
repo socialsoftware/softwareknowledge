@@ -13,13 +13,13 @@ public class Category {
 	private Set<Category> subCategorySet;
 	private Category parent;
 	private Set<Source> sourceWithCatSet;
-
+	private static int catIdCounter=0;
 	
 
-	public Category(SoftwareKnowledge softwareKnowledge, int catId, String name, Category parent) {
+	public Category(SoftwareKnowledge softwareKnowledge, String name, Category parent) {
 		
 		setSoftwareKnowledge(softwareKnowledge);
-		setCatId(catId);
+		setCatId(Category.catIdCounter++);
 		setName(name);
 		softwareKnowledge.addCategory(this);
 		subCategorySet = new HashSet<Category>();
@@ -97,8 +97,12 @@ public class Category {
 		this.sourceWithCatSet = sourceWithCatSet;
 	}
 
+	
 	public CategoryDTO getDTO() {
-		return new CategoryDTO(getCatId(), getName());
+		if(getParent() == null){
+			return new CategoryDTO(getCatId(), getName(), 0);
+		}
+		return new CategoryDTO(getCatId(), getName(), getParent().getCatId());
 	}
 	
 	public void addSub(Category category){

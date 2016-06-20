@@ -38,54 +38,20 @@ angular.module('categories', [])
 			controller : CategoryFormComponent
 		});
 
-/*function CategoryService($q) {
-	var categoriesPromise = $q.when([ {
-		catId : 11,
-		name : 'Requirements'
-	}, {
-		catId : 12,
-		name : 'Test'
-	}, {
-		catId : 13,
-		name : 'Refactor'
-	}, {
-		catId : 14,
-		name : 'Design'
-	} ]);
 
-	this.getCategories = function() {
-		return categoriesPromise;
-	};
-
-	this.getCategory = function(catId) {
-		return categoriesPromise.then(function(categories) {
-			for (var i = 0; i < categories.length; i++) {
-				if (categories[i].catId == catId)
-					return categories[i];
-			}
-		});
-	};
-
-}*/
 
 function CategoryListComponent(categoryRepository) {
 	var $ctrl = this;
 
-	this.name = 1;
-	this.catId = 1;
-
 	this.$routerOnActivate = function() {
 		categoryRepository.getCategories().then(function(categories) {
-			$ctrl.categories = categories;
+			$ctrl.categories = categories.data;
 		});
 	};
 
 	this.isSelected = function(category) {
 		return (category.catId == selectedId);
 	};
-
-	
-	
 	
 }
 
@@ -93,10 +59,10 @@ function CategoryDetailComponent(categoryRepository) {
 	var $ctrl = this;
 
 	this.$routerOnActivate = function(next) {
-		// Get the category identified by the route parameter
+		
 		var catId = next.params.id;
 		categoryRepository.getCategory(catId).then(function(category) {
-			$ctrl.category = category;
+			$ctrl.category = category.data;
 		});
 	};
 
@@ -111,25 +77,20 @@ function CategoryDetailComponent(categoryRepository) {
 function CategoryFormComponent(categoryRepository){
 	var $ctrl = this;
 	
-	this.name = $ctrl.name;
-	this.catId =null;
-	
 	this.$routerOnActivate = function() {
-		categoryRepository.getCategories().then(function(categories) {
-			$ctrl.categories = categories;
+		categoryRepository.getCategories().then(function(response) {
+			$ctrl.categories = response.data;
 		});
 	}
 	
 	this.createCategory = function() {
-		this.name = $ctrl.name;
-		this.catId = null;
-		//this.parentId = 
 		categoryRepository.createCategory({
 			"name" : this.name,
-			"catId" : this.catId,
-			"parentId" : this.parentId
+			"parentId" : this.selectedCategory == null ? 0 : this.selectedCategory.catId
 		}).then(function(response) {
-			categoryRepository.getCategories();
+			categoryRepository.getCategories().then(function(response) {
+				$ctrl.categories = response.data;
+			});
 		}, function(response) {
 			alert(response.data.type + '(' + response.data.value + ')');
 		});	

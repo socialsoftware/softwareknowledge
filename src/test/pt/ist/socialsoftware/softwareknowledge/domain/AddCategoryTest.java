@@ -31,18 +31,17 @@ public class AddCategoryTest {
 
 	@Test
 	public void addCategorySuccessTest() {
-		Category category = new Category(softwareKnowledge, 1, "Programming", null);
+		Category category = new Category(softwareKnowledge, "Programming", null);
 
-		assertEquals(1, category.getCatId());
 		assertEquals("Programming", category.getName());
 		assertEquals(1, softwareKnowledge.getCategorySet().size());
 	}
 
 	@Test
 	public void addCategoryDuplicateErroeTest() {
-		new Category(softwareKnowledge, 1, "Programming", null);
+		new Category(softwareKnowledge,"Programming", null);
 		try {
-			new Category(softwareKnowledge, 1, "Programming", null);
+			new Category(softwareKnowledge,"Programming", null);
 			fail();
 		} catch (SKException ske) {
 			assertEquals(SKErrorType.DUPLICATE_CATEGORY, ske.getError());

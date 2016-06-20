@@ -10,7 +10,11 @@ app.factory('categoryRepository', function($http) {
 		},
 		createCategory : function(category) {
 			var url = "/category";
-			$http.post(url, category);
+			return $http.post(url, category);
+		},
+		getSubCategories : function(id) {
+			var url = "/category" + id + "/sub";
+			return $http.get(url);
 		}
 	};
 });

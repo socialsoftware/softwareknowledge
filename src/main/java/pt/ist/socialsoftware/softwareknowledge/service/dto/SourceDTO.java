@@ -10,16 +10,26 @@ public class SourceDTO {
 	  private int sourceId;
 	  private String insertDate;
 	  private String name;
+	  private String link;
 	  
 	  public SourceDTO(){};
 	  
-	  public SourceDTO(String author, int sourceId, String insertDate, String name){
+	  public SourceDTO(String author, int sourceId, String insertDate, String name, String link){
 		  this.author=author;
 		  this.sourceId=sourceId;
 		  this.insertDate=insertDate;
 		  this.name=name;
+		  this.link=link;
 	  }
-	  public String getAuthor() {
+	  public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getAuthor() {
 		return author;
 	}
 	public void setAuthor(String author) {

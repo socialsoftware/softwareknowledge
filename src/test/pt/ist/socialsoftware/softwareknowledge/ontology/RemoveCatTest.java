@@ -34,7 +34,7 @@ public class RemoveCatTest {
 	@Test
 	public void removeCategorySuccessTest() {
 		
-		Category cat = new Category(softwareKnowledge, 2, "Testes", null);
+		Category cat = new Category(softwareKnowledge, "Testes", null);
 		ontologyInterface.addCategory(cat);
 		System.out.println("Inicio:" + softwareKnowledge.getCategorySet().size());
 		ontologyInterface.removeCat(cat);

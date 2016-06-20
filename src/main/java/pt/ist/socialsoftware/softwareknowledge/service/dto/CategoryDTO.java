@@ -10,19 +10,16 @@ public class CategoryDTO {
 	private String parent;
 	private int parentId;
 
-	/*
+	
+	public CategoryDTO(){}
+	
 	public CategoryDTO(int catId, String name, int parentId) {
 		this.catId = catId;
 		this.name = name;
 		this.parentId = parentId;
-	}*/
-	public CategoryDTO() {
-
 	}
-	public CategoryDTO(int catId, String name) {
-		this.catId = catId;
-		this.name = name;
-	}
+	
+	
 	public int getParentId() {
 		return parentId;
 	}

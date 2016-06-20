@@ -33,7 +33,7 @@ public class AddSourceTest {
 
 	@Test
 	public void addSourceSuccessTest() {
-		ontologyInterface.addSource(new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016"));
+		ontologyInterface.addSource(new Source(softwareKnowledge, 1, "TestingSource","Rodrigo","29-04-2016","http"));
 		assertEquals("TestingSource", OntologyManager.getModel().getResource("/TestingSource").getLocalName());
 	}
 

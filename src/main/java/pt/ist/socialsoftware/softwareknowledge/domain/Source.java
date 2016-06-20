@@ -14,26 +14,34 @@ public class Source {
 	private String name;
 	private Set<Category> catInSourceSet;
 	private Set<RelatedSource> relatedSourceSet;
+	private String link;
 	
-	
-	
-	
-
 	public Source(){}
 	
 	
-	public Source(SoftwareKnowledge softwareKnowledge, int sourceId, String name, String author, String insertDate) {
+	public Source(SoftwareKnowledge softwareKnowledge, int sourceId, String name, String author, String insertDate, String link) {
 		setSoftwareKnowledge(softwareKnowledge);
 		setSourceId(sourceId);
 		setName(name);
 		setInsertDate(insertDate);
 		setAuthor(author);
+		setLink(link);
 		catInSourceSet = new HashSet<Category>();
 		relatedSourceSet = new HashSet<RelatedSource>();
 		softwareKnowledge.addSource(this);
 		OntologyInterface.getInstance().addSource(this);
 	}
 	
+	public String getLink() {
+		return link;
+	}
+
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+
 	public SoftwareKnowledge getSoftwareKnowledge() {
 		return softwareknowledge;
 	}
@@ -110,7 +118,7 @@ public class Source {
 	}
 	public SourceDTO getDTO() {
 	
-		return new SourceDTO(getAuthor(),getSourceId(), getInsertDate(), getName());
+		return new SourceDTO(getAuthor(),getSourceId(), getInsertDate(), getName(), getLink());
 		
 	}
 	

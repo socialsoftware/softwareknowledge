@@ -2,7 +2,6 @@ package pt.ist.socialsoftware.softwareknowledge.ontology;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.jena.ontology.Individual;
 import org.apache.jena.ontology.OntModel;
@@ -32,12 +31,7 @@ public class OntologyInterface {
 		OntologyManager.initModel(OntModelSpec.OWL_MEM_RULE_INF);
 	}
 
- 
 
-	public void test() {
-		OntologyManager ex = new OntologyManager();
-		ex.test();
-	}
 	
 	public void cleanResources(){
 		OntModel model = OntologyManager.getModel();
@@ -74,15 +68,13 @@ public class OntologyInterface {
 	 
 	public void addSubToCat(Category category){
 		OntModel model = OntologyManager.getModel();
-		Set<Category> subCatSet = category.getSubCategorySet();
 		
 		final Individual cat1 = model.createIndividual(OntologyManager.getNS() + category.getParent().getName(),
 				model.getOntClass("category"));
 		final Individual sub1 = model.createIndividual(OntologyManager.getNS() + category.getName(), 
 				model.getOntClass("subCategory"));
 		
-		cat1.addProperty(model.getProperty("hasSubCategory"),sub1);
-		subCatSet.add(category);			
+		cat1.addProperty(model.getProperty("hasSubCategory"),sub1);		
 		}
 		
 		
@@ -90,8 +82,6 @@ public class OntologyInterface {
 	
 	public void addCatToSource(Source source, Category category) {
 		OntModel model = OntologyManager.getModel();
-		Set<Category> catInSourceSet = source.getCatInSourceSet();
-		Set<Source> sourceWithCatSet = category.getSourceWithCatSet();
 		
 		final Individual cat1 = model.createIndividual(OntologyManager.getNS() + category.getName(),
 				model.getOntClass("category"));
@@ -99,8 +89,7 @@ public class OntologyInterface {
 				model.getOntClass("source"));
 		
 		source1.addProperty(model.getProperty("hasCategory"),cat1);
-		catInSourceSet.add(category);
-		sourceWithCatSet.add(source);
+	
 		
 					
 	}

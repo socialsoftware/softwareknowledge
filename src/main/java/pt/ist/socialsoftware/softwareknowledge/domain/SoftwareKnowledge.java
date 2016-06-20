@@ -19,6 +19,7 @@ public class SoftwareKnowledge {
 	private SoftwareKnowledge() {
 	}
 
+	private Set<Category> subCategorySet = new HashSet<Category>();
 	private Set<Category> categorySet = new HashSet<Category>();
 	private Set<Source> sourceSet = new HashSet<Source>();
 	private Set<RelatedSource> relatedSourceSet = new HashSet<RelatedSource>();
@@ -28,6 +29,7 @@ public class SoftwareKnowledge {
 		categorySet.clear();
 		sourceSet.clear();
 		relatedSourceSet.clear();
+		subCategorySet.clear();
 	}
 
 	public void addCategory(Category category) {
@@ -39,6 +41,16 @@ public class SoftwareKnowledge {
 
 		categorySet.add(category);
 	}
+	
+	public void addSubCategory(Category category){
+		if (subCategorySet.stream()
+				.filter(c -> c.getCatId() == category.getCatId() || c.getName().equals(category.getName())).findFirst()
+				.isPresent()) {
+			throw new SKException(SKErrorType.DUPLICATE_CATEGORY, category.getCatId() + ":" + category.getName());
+		}
+		subCategorySet.add(category);
+	}
+	
 	
 	public void addSource(Source source){
 		if(sourceSet.stream().filter(s -> s.getSourceId() == source.getSourceId() || s.getName().equals(source.getName())).findFirst()
@@ -90,12 +102,37 @@ public class SoftwareKnowledge {
 		return null;
 	}
 	
+	public Category getSubCategory(String name){
+		for(Category c : getSubCategorySet()){
+			if(c.getName().equals(name)){
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public Category getSubCategory(int catId){
+		for(Category c : getSubCategorySet()){
+			if(c.getCatId() == catId){
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	public Source getSource(String name){
 		return	getSourceSet().stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
 		
 	}
 	
-
+	public Source getSource(int sourceId) {
+		for(Source s : getSourceSet()){
+			if(s.getSourceId() == sourceId){
+				return s;
+			}
+		}
+		return null;
+	}
 	
 
 	public Set<RelatedCategory> getRelatedCategorySet() {
@@ -129,10 +166,24 @@ public class SoftwareKnowledge {
 	public Set<Source> getSourceSet(){
 		return sourceSet;
 	}
+
+	public Set<Category> getSubCategorySet() {
+		return subCategorySet;
+	}
 	
-	
-	
-	
+	public Set<Category> getSubCategorySet(int catId){
+		for(Category c : getCategorySet()){
+			if(c.getCatId() == catId){
+				return c.getSubCategorySet();
+			}
+		}
+		return null;
+	}
+
+	public void setSubCategorySet(Set<Category> subCategorySet) {
+		this.subCategorySet = subCategorySet;
+	}
 	
 
+	
 }

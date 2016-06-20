@@ -1,0 +1,13 @@
+<div ng-if="$ctrl.source">
+	<h3>{{$ctrl.source.name}}</h3>
+	<div>
+		<label>Id: </label>{{$ctrl.source.sourceId}}
+	</div>
+	<div>
+		<label>Name: </label> <input ng-model="$ctrl.source.name" placeholder="name" />
+	</div>
+	<div>
+		<label>Author:</label>{{$ctrl.source.author}}
+	</div>
+	<button ng-click="$ctrl.gotoSources()">Back</button>
+</div>
