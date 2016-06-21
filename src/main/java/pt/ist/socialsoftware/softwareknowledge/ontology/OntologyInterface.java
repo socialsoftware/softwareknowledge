@@ -42,8 +42,16 @@ public class OntologyInterface {
 		OntModel model = OntologyManager.getModel();
 		final Individual cat1 = model.createIndividual(OntologyManager.getNS() + category.getName(),
 				model.getOntClass("category"));
+		
 		cat1.addLiteral(model.getProperty("catId"), category.getCatId());
 		cat1.addProperty(model.getProperty("catName"), category.getName());
+		
+		/*
+		if(category.getParent() != null){
+			final Individual cat2 = model.createIndividual(OntologyManager.getNS() + category.getParent().getName(),
+					model.getOntClass("category"));
+			cat2.addProperty(model.getProperty("hasSubCategory"),cat1);
+		}*/
 		
 	}
 
