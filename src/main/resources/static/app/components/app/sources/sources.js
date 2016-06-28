@@ -83,6 +83,7 @@ function SourceFormComponent(sourceRepository,categoryRepository){
 		categoryRepository.getCategories().then(function(response) {
 			$ctrl.categories = response.data;
 		});
+		
 	};
 
 	

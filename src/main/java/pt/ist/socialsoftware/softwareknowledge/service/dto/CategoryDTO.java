@@ -9,17 +9,19 @@ public class CategoryDTO {
 	private String name;
 	private String parent;
 	private int parentId;
+	private String fullName;
 
-	
-	public CategoryDTO(){}
-	
-	public CategoryDTO(int catId, String name, int parentId) {
-		this.catId = catId;
-		this.name = name;
-		this.parentId = parentId;
+	public CategoryDTO() {
 	}
-	
-	
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
 	public int getParentId() {
 		return parentId;
 	}
@@ -35,7 +37,6 @@ public class CategoryDTO {
 	public void setParent(String parent) {
 		this.parent = parent;
 	}
-
 
 	public int getCatId() {
 		return catId;

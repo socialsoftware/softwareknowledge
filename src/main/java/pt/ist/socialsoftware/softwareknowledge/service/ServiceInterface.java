@@ -25,7 +25,6 @@ public class ServiceInterface {
 		return SoftwareKnowledge.getInstance();
 	}
 
-
 	public Category createCategory(CategoryDTO categoryDTO) {
 		Category parent = getSoftwareKnowledge().getCategory(categoryDTO.getParentId());
 		return new Category(getSoftwareKnowledge(), categoryDTO.getName(), parent);
@@ -33,12 +32,13 @@ public class ServiceInterface {
 
 	public Source createSource(SourceDTO sourceDTO) {
 		return new Source(getSoftwareKnowledge(), sourceDTO.getSourceId(), sourceDTO.getName(), sourceDTO.getAuthor(),
-				sourceDTO.getInsertDate(),sourceDTO.getLink());
+				sourceDTO.getInsertDate(), sourceDTO.getLink());
 	}
 
-	public Set<Category> getSubCategories(int catId){
+	public Set<Category> getSubCategories(int catId) {
 		return getSoftwareKnowledge().getSubCategorySet(catId);
 	}
+
 	public Set<Category> getCategories() {
 		return getSoftwareKnowledge().getCategorySet();
 
@@ -47,7 +47,7 @@ public class ServiceInterface {
 	public Category getCategory(int catId) {
 		return getSoftwareKnowledge().getCategory(catId);
 	}
-	
+
 	public Category getCategory(String name) {
 		return getSoftwareKnowledge().getCategory(name);
 	}
@@ -59,8 +59,8 @@ public class ServiceInterface {
 	public Source getSource(int sourceId) {
 		return getSoftwareKnowledge().getSource(sourceId);
 	}
-	
-	public Source getSource(String name){
+
+	public Source getSource(String name) {
 		return getSoftwareKnowledge().getSource(name);
 	}
 }

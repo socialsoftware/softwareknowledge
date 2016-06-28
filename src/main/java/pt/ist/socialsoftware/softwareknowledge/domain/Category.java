@@ -13,11 +13,10 @@ public class Category {
 	private Set<Category> subCategorySet;
 	private Category parent;
 	private Set<Source> sourceWithCatSet;
-	private static int catIdCounter=0;
-	
+	private static int catIdCounter = 0;
 
 	public Category(SoftwareKnowledge softwareKnowledge, String name, Category parent) {
-		
+
 		setSoftwareKnowledge(softwareKnowledge);
 		setCatId(Category.catIdCounter++);
 		setName(name);
@@ -25,15 +24,14 @@ public class Category {
 		subCategorySet = new HashSet<Category>();
 		sourceWithCatSet = new HashSet<Source>();
 		OntologyInterface.getInstance().addCategory(this);
-		if(parent != null){
+		if (parent != null) {
 			parent.addSub(this);
-		}
-		else{
+		} else {
 			this.parent = null;
 		}
-			  
+
 	}
-	
+
 	public Category getParent() {
 		return parent;
 	}
@@ -50,20 +48,18 @@ public class Category {
 		this.subCategorySet = subCategorySet;
 	}
 
-	public Category(SoftwareKnowledge softwareknowledge, int catId){
+	public Category(SoftwareKnowledge softwareknowledge, int catId) {
 		setSoftwareKnowledge(softwareKnowledge);
 		setCatId(catId);
 		softwareKnowledge.addCategory(this);
 		OntologyInterface.getInstance().addCategory(this);
 	}
-	
-	public Category(SoftwareKnowledge softwareknowledge){
+
+	public Category(SoftwareKnowledge softwareknowledge) {
 		setSoftwareKnowledge(softwareKnowledge);
 		softwareKnowledge.addCategory(this);
 		OntologyInterface.getInstance().addCategory(this);
 	}
-
-	
 
 	public SoftwareKnowledge getSoftwareKnowledge() {
 		return softwareKnowledge;
@@ -88,7 +84,7 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Set<Source> getSourceWithCatSet() {
 		return sourceWithCatSet;
 	}
@@ -97,17 +93,24 @@ public class Category {
 		this.sourceWithCatSet = sourceWithCatSet;
 	}
 
-	
 	public CategoryDTO getDTO() {
-		if(getParent() == null){
-			return new CategoryDTO(getCatId(), getName(), 0);
-		}
-		return new CategoryDTO(getCatId(), getName(), getParent().getCatId());
+		CategoryDTO categoryDTO = new CategoryDTO();
+		categoryDTO.setCatId(getCatId());
+		categoryDTO.setName(getName());
+		categoryDTO.setFullName(getFullName());
+		categoryDTO.setParentId(getParent() != null ? getParent().getCatId() : 0);
+		categoryDTO.setParent(getParent() != null ? getParent().getName() : "");
+
+		return categoryDTO;
 	}
-	
-	public void addSub(Category category){
+
+	public void addSub(Category category) {
 		category.setParent(this);
 		subCategorySet.add(category);
 		OntologyInterface.getInstance().addSubToCat(category);
+	}
+
+	private String getFullName() {
+		return getParent() != null ? getParent().getFullName() + "." + getName() : getName();
 	}
 }
