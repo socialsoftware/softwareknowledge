@@ -15,6 +15,10 @@ app.factory('categoryRepository', function($http) {
 		getSubCategories : function(id) {
 			var url = "/category" + id + "/sub";
 			return $http.get(url);
+		},
+		getCatParent : function(id) {
+			var url = "/category" + id + "/parent";
+			return $http.get(url);
 		}
 	};
 });

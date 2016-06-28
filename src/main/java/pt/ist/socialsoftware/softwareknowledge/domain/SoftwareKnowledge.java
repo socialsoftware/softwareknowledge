@@ -19,17 +19,16 @@ public class SoftwareKnowledge {
 	private SoftwareKnowledge() {
 	}
 
-	private Set<Category> subCategorySet = new HashSet<Category>();
 	private Set<Category> categorySet = new HashSet<Category>();
 	private Set<Source> sourceSet = new HashSet<Source>();
 	private Set<RelatedSource> relatedSourceSet = new HashSet<RelatedSource>();
 	private Set<RelatedCategory> relatedCategorySet = new HashSet<RelatedCategory>();
-	
+
 	public void clean() {
 		categorySet.clear();
 		sourceSet.clear();
 		relatedSourceSet.clear();
-		subCategorySet.clear();
+
 	}
 
 	public void addCategory(Category category) {
@@ -41,99 +40,82 @@ public class SoftwareKnowledge {
 
 		categorySet.add(category);
 	}
-	
-	public void addSubCategory(Category category){
-		if (subCategorySet.stream()
-				.filter(c -> c.getCatId() == category.getCatId() || c.getName().equals(category.getName())).findFirst()
-				.isPresent()) {
-			throw new SKException(SKErrorType.DUPLICATE_CATEGORY, category.getCatId() + ":" + category.getName());
-		}
-		subCategorySet.add(category);
-	}
-	
-	
-	public void addSource(Source source){
-		if(sourceSet.stream().filter(s -> s.getSourceId() == source.getSourceId() || s.getName().equals(source.getName())).findFirst()
-				.isPresent()){
+
+	public void addSource(Source source) {
+		if (sourceSet.stream()
+				.filter(s -> s.getSourceId() == source.getSourceId() || s.getName().equals(source.getName()))
+				.findFirst().isPresent()) {
 			throw new SKException(SKErrorType.DUPLICATE_SOURCE, source.getSourceId() + ":" + source.getName());
 		}
-		
+
 		sourceSet.add(source);
-		
-		
+
 	}
-	
-	public void addRelatedSource(Source s1, Source s2, SourceProperty p){
-		for (RelatedSource r : getRelatedSourceSet()){
-			if(r.getS1().getName().equals(s1.getName()) && r.getS2().getName().equals(s2.getName()) && r.getSourceProperty() == p){
+
+	public void addRelatedSource(Source s1, Source s2, SourceProperty p) {
+		for (RelatedSource r : getRelatedSourceSet()) {
+			if (r.getS1().getName().equals(s1.getName()) && r.getS2().getName().equals(s2.getName())
+					&& r.getSourceProperty() == p) {
 				throw new SKException(SKErrorType.DUPLICATE_RELATEDSOURCE, s1.getName() + "," + s1.getName() + "," + p);
 			}
 			RelatedSource rs = new RelatedSource(s1, s2, p);
 			getRelatedSourceSet().add(rs);
 		}
 	}
-	
-	
-	public void addRelatedCategory(Category c1, Category c2, CategoryProperty p){
-		for(RelatedCategory r : getRelatedCategorySet()){
-			if(r.getC1().getName().equals(c1.getName()) && r.getC2().getName().equals(c2.getName()) && r.getCategoryProperty() == p){
-				throw new SKException(SKErrorType.DUPLICATE_RELATEDCATEGORY, c1.getName() + "," + c1.getName() + "," + p);
+
+	public void addRelatedCategory(Category c1, Category c2, CategoryProperty p) {
+		for (RelatedCategory r : getRelatedCategorySet()) {
+			if (r.getC1().getName().equals(c1.getName()) && r.getC2().getName().equals(c2.getName())
+					&& r.getCategoryProperty() == p) {
+				throw new SKException(SKErrorType.DUPLICATE_RELATEDCATEGORY,
+						c1.getName() + "," + c1.getName() + "," + p);
 			}
 			RelatedCategory rc = new RelatedCategory(c1, c2, p);
 			getRelatedCategorySet().add(rc);
 		}
 	}
-		
-	public Category getCategory(String name){
-		for(Category c : getCategorySet()){
-			if(c.getName().equals(name)){
+
+	public Category getCategory(String name) {
+		for (Category c : getCategorySet()) {
+			if (c.getName().equals(name)) {
 				return c;
 			}
 		}
 		return null;
 	}
-	
-	public Category getCategory(int catId){
-		for(Category c : getCategorySet()){
-			if(c.getCatId() == catId){
+
+	public Category getCategory(int catId) {
+		for (Category c : getCategorySet()) {
+			if (c.getCatId() == catId) {
 				return c;
 			}
 		}
 		return null;
 	}
-	
-	public Category getSubCategory(String name){
-		for(Category c : getSubCategorySet()){
-			if(c.getName().equals(name)){
-				return c;
-			}
-		}
-		return null;
+
+	/*
+	 * public Category getSubCategory(String name){ for(Category c :
+	 * getSubCategorySet()){ if(c.getName().equals(name)){ return c; } } return
+	 * null; }
+	 * 
+	 * public Category getSubCategory(int catId){ for(Category c :
+	 * getSubCategorySet()){ if(c.getCatId() == catId){ return c; } } return
+	 * null; }
+	 */
+
+	public Source getSource(String name) {
+		return getSourceSet().stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
+
 	}
-	
-	public Category getSubCategory(int catId){
-		for(Category c : getSubCategorySet()){
-			if(c.getCatId() == catId){
-				return c;
-			}
-		}
-		return null;
-	}
-	
-	public Source getSource(String name){
-		return	getSourceSet().stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
-		
-	}
-	
+
 	public Source getSource(int sourceId) {
-		for(Source s : getSourceSet()){
-			if(s.getSourceId() == sourceId){
+		for (Source s : getSourceSet()) {
+			if (s.getSourceId() == sourceId) {
 				return s;
 			}
 		}
 		return null;
 	}
-	
 
 	public Set<RelatedCategory> getRelatedCategorySet() {
 		return relatedCategorySet;
@@ -162,28 +144,18 @@ public class SoftwareKnowledge {
 	public Set<Category> getCategorySet() {
 		return categorySet;
 	}
-	
-	public Set<Source> getSourceSet(){
+
+	public Set<Source> getSourceSet() {
 		return sourceSet;
 	}
 
-	public Set<Category> getSubCategorySet() {
-		return subCategorySet;
-	}
-	
-	public Set<Category> getSubCategorySet(int catId){
-		for(Category c : getCategorySet()){
-			if(c.getCatId() == catId){
+	public Set<Category> getSubCategorySet(int catId) {
+		for (Category c : getCategorySet()) {
+			if (c.getCatId() == catId) {
 				return c.getSubCategorySet();
 			}
 		}
 		return null;
 	}
 
-	public void setSubCategorySet(Set<Category> subCategorySet) {
-		this.subCategorySet = subCategorySet;
-	}
-	
-
-	
 }

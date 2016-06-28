@@ -87,17 +87,28 @@ function SourceFormComponent(sourceRepository,categoryRepository){
 	};
 
 	
+	this.getParent = function(id) {
+		categoryRepository.getCatParent(id).then(function(response){
+			$ctrl.parent = response.data;
+		});
+		
+	};
+	
+	this.getSub = function(id) {
+		categoryRepository.getSubCategories(id).then(function(response){
+			$ctrl.sub = response.data;
+		});
+	};
+	
+	
 	this.createSource = function() {
 		sourceRepository.createSource({
 			"name" : this.name,
 			"author" : this.author,
 			"link" : this.link,
-			"parentId" : this.selectedCategory.catId,
-			"subId" : this.categoryChild.catId
+			"catList" : this.selectedCategory,
+			"subCatList" : this.subCategories
 		}).then(function(response) {
-			categoryRepository.getSubCategories(this.selectedCategory.catId).then(function(response){
-				$ctrl.subCat = response.data;
-			});
 			
 			sourceRepository.getSources().then(function(response) {
 				$ctrl.sources = response.data;

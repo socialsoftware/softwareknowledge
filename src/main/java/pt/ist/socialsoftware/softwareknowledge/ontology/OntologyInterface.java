@@ -45,13 +45,11 @@ public class OntologyInterface {
 		
 		cat1.addLiteral(model.getProperty("catId"), category.getCatId());
 		cat1.addProperty(model.getProperty("catName"), category.getName());
-		
-		/*
 		if(category.getParent() != null){
 			final Individual cat2 = model.createIndividual(OntologyManager.getNS() + category.getParent().getName(),
 					model.getOntClass("category"));
 			cat2.addProperty(model.getProperty("hasSubCategory"),cat1);
-		}*/
+		}
 		
 	}
 
@@ -63,11 +61,18 @@ public class OntologyInterface {
 		OntProperty id = model.createOntProperty(OntologyManager.getNS() + "sourceid");
 		OntProperty name = model.createOntProperty(OntologyManager.getNS() + "sourceName");
 		OntProperty author = model.createOntProperty(OntologyManager.getNS() + "author");
-		OntProperty date = model.createOntProperty(OntologyManager.getNS() + "date");
+		//OntProperty date = model.createOntProperty(OntologyManager.getNS() + "date");
+		OntProperty category = model.createOntProperty(OntologyManager.getNS() + "hascategory");
 		source1.addLiteral(id, source.getSourceId());
 		source1.addProperty(name, source.getName());
 		source1.addProperty(author, source.getAuthor());
-		source1.addProperty(date, source.getInsertDate());
+		//source1.addProperty(date, source.getInsertDate());
+		
+		for(Category c : source.getCatInSourceSet()){
+			source1.addProperty(category, c.getName());
+		}
+		
+		
 		
 		
 	}
