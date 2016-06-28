@@ -1,5 +1,5 @@
 
-var app = angular.module('app', [ 'ngComponentRouter', 'sources', 'categories'])
+var app = angular.module('app', [ 'ngComponentRouter', 'sources', 'categories', 'angularjs-dropdown-multiselect'])
 
 .config(function($locationProvider) {
 	$locationProvider.html5Mode(true);

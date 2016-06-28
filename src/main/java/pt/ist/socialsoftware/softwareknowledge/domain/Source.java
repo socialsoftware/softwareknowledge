@@ -2,11 +2,14 @@ package pt.ist.socialsoftware.softwareknowledge.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import pt.ist.socialsoftware.softwareknowledge.ontology.OntologyInterface;
+import pt.ist.socialsoftware.softwareknowledge.service.dto.CategoryDTO;
 import pt.ist.socialsoftware.softwareknowledge.service.dto.SourceDTO;
 
 public class Source {
+	
 	private SoftwareKnowledge softwareknowledge;
 	private String author;
 	private Integer sourceId;
@@ -15,13 +18,15 @@ public class Source {
 	private Set<Category> catInSourceSet;
 	private Set<RelatedSource> relatedSourceSet;
 	private String link;
-	
-	public Source(){}
-	
-	
-	public Source(SoftwareKnowledge softwareKnowledge, int sourceId, String name, String author, String insertDate, String link) {
+	private static int sourceIdCounter=0;
+
+	public Source() {
+	}
+
+	public Source(SoftwareKnowledge softwareKnowledge, int sourceId, String name, String author, String insertDate,
+			String link) {
 		setSoftwareKnowledge(softwareKnowledge);
-		setSourceId(sourceId);
+		setSourceId(Source.sourceIdCounter++);
 		setName(name);
 		setInsertDate(insertDate);
 		setAuthor(author);
@@ -31,16 +36,26 @@ public class Source {
 		softwareKnowledge.addSource(this);
 		OntologyInterface.getInstance().addSource(this);
 	}
-	
+
+	public Source(SoftwareKnowledge softwareKnowledge, int sourceId, String name, String author, String link,Set<Category> catList) {
+		setSoftwareKnowledge(softwareKnowledge);
+		setSourceId(Source.sourceIdCounter++);
+		setName(name);
+		setAuthor(author);
+		setLink(link);
+		setCatInSourceSet(catList);
+		relatedSourceSet = new HashSet<RelatedSource>();
+		softwareKnowledge.addSource(this);
+		OntologyInterface.getInstance().addSource(this);
+	}
+
 	public String getLink() {
 		return link;
 	}
 
-
 	public void setLink(String link) {
 		this.link = link;
 	}
-
 
 	public SoftwareKnowledge getSoftwareKnowledge() {
 		return softwareknowledge;
@@ -49,6 +64,7 @@ public class Source {
 	public void setSoftwareKnowledge(SoftwareKnowledge softwareKnowledge) {
 		this.softwareknowledge = softwareKnowledge;
 	}
+
 	public String getAuthor() {
 		return author;
 	}
@@ -85,43 +101,34 @@ public class Source {
 		return softwareknowledge;
 	}
 
-
 	public void setSoftwareknowledge(SoftwareKnowledge softwareknowledge) {
 		this.softwareknowledge = softwareknowledge;
 	}
-
 
 	public Set<Category> getCatInSourceSet() {
 		return catInSourceSet;
 	}
 
-
 	public void setCatInSourceSet(Set<Category> catInSourceSet) {
 		this.catInSourceSet = catInSourceSet;
 	}
-	
-	
 
 	public Set<RelatedSource> getRelatedSourceSet() {
 		return relatedSourceSet;
 	}
 
-
 	public void setRelatedSourceSet(Set<RelatedSource> relatedSourceSet) {
 		this.relatedSourceSet = relatedSourceSet;
 	}
 
-	
-	public void addRelatedSource(Source source, SourceProperty property){
-		RelatedSource rs = new RelatedSource(this,source,property);
+	public void addRelatedSource(Source source, SourceProperty property) {
+		RelatedSource rs = new RelatedSource(this, source, property);
 		this.getRelatedSourceSet().add(rs);
 	}
+
 	public SourceDTO getDTO() {
-	
-		return new SourceDTO(getAuthor(),getSourceId(), getInsertDate(), getName(), getLink());
-		
+	     Set<CategoryDTO> categories = getCatInSourceSet().stream().map(c->c.getDTO()).collect(Collectors.toSet());
+	     return new SourceDTO(getAuthor(), getSourceId(), getName(), getLink(), categories);
 	}
-	
-	
-	
+
 }

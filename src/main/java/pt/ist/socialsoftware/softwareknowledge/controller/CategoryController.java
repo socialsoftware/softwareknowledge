@@ -32,7 +32,7 @@ public class CategoryController {
 		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}/sub", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	/*@RequestMapping(value = "/{id}/sub", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<CategoryDTO[]> getSubCategories(@PathVariable("id") int catId) {
 		logger.debug("getSubCategoriescatId:{}", catId);
 
@@ -41,10 +41,10 @@ public class CategoryController {
 				.toArray(size -> new CategoryDTO[size]);
 
 		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
-	}
+	}*/
 
 	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public ResponseEntity<CategoryDTO> getCategory(@PathVariable("id") String catId) {
+	public ResponseEntity<CategoryDTO> getCategory(@PathVariable("id") int catId) {
 		logger.debug("getCategory catId:{}", catId);
 
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
@@ -52,7 +52,16 @@ public class CategoryController {
 
 		return new ResponseEntity<CategoryDTO>(categoryDTO, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{id}/parent", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public ResponseEntity<CategoryDTO> getCatParent(@PathVariable("id") int catId) {
+		logger.debug("getCatParent:{}", catId);
 
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		CategoryDTO categories = serviceInterface.getCatParent(catId).getDTO();
+
+		return new ResponseEntity<CategoryDTO>(categories, HttpStatus.OK);
+	}
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {

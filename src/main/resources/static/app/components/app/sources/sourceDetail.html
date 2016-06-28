@@ -4,10 +4,14 @@
 		<label>Id: </label>{{$ctrl.source.sourceId}}
 	</div>
 	<div>
-		<label>Name: </label> <input ng-model="$ctrl.source.name" placeholder="name" />
+		<label>Name: </label> <input ng-model="$ctrl.source.name"
+			placeholder="name" />
 	</div>
 	<div>
 		<label>Author:</label>{{$ctrl.source.author}}
+	</div>
+	<div>
+		<label>Categories:</label><div ng-repeat="category in $ctrl.source.catList">{{category.name}}</div>
 	</div>
 	<button ng-click="$ctrl.gotoSources()">Back</button>
 </div>

@@ -32,7 +32,7 @@ public class SourceController {
 	}
 
 	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public ResponseEntity<SourceDTO> getSource(@PathVariable("id") String sourceId) {
+	public ResponseEntity<SourceDTO> getSource(@PathVariable("id") int sourceId) {
 		logger.debug("getSource sourceId:{}", sourceId);
 
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
@@ -44,8 +44,8 @@ public class SourceController {
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public ResponseEntity<SourceDTO> createSource(@RequestBody SourceDTO sourceDTO) {
-		logger.debug("createSource name:{}, link:{}, author:{}", sourceDTO.getName(), sourceDTO.getLink(),sourceDTO.getAuthor());
-
+		logger.debug("createSource name:{}, link:{}, author:{}, catList:{}", sourceDTO.getName(), sourceDTO.getLink(),sourceDTO.getAuthor(), sourceDTO.getCatList());
+		
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
 		Source source = serviceInterface.createSource(sourceDTO);
 

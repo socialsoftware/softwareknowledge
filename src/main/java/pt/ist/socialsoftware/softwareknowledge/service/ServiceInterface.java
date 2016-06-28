@@ -1,5 +1,6 @@
 package pt.ist.socialsoftware.softwareknowledge.service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import pt.ist.socialsoftware.softwareknowledge.domain.Category;
@@ -25,28 +26,39 @@ public class ServiceInterface {
 		return SoftwareKnowledge.getInstance();
 	}
 
-
+	public Category getCategory(int catId) {
+		return getSoftwareKnowledge().getCategory(catId);
+	}
+	
 	public Category createCategory(CategoryDTO categoryDTO) {
 		Category parent = getSoftwareKnowledge().getCategory(categoryDTO.getParentId());
 		return new Category(getSoftwareKnowledge(), categoryDTO.getName(), parent);
 	}
 
 	public Source createSource(SourceDTO sourceDTO) {
+		
+		Set<Category> catList = new HashSet<Category>();
+		
+		for(CategoryDTO i :sourceDTO.getCatList()){
+			catList.add(getSoftwareKnowledge().getCategory(i.getCatId()));
+		}
+		
 		return new Source(getSoftwareKnowledge(), sourceDTO.getSourceId(), sourceDTO.getName(), sourceDTO.getAuthor(),
-				sourceDTO.getInsertDate(),sourceDTO.getLink());
+				sourceDTO.getLink(), catList);
 	}
-
+	
+	/*
 	public Set<Category> getSubCategories(int catId){
 		return getSoftwareKnowledge().getSubCategorySet(catId);
 	}
+	*/
+	
 	public Set<Category> getCategories() {
 		return getSoftwareKnowledge().getCategorySet();
 
 	}
 
-	public Category getCategory(int catId) {
-		return getSoftwareKnowledge().getCategory(catId);
-	}
+	
 	
 	public Category getCategory(String name) {
 		return getSoftwareKnowledge().getCategory(name);
@@ -62,5 +74,10 @@ public class ServiceInterface {
 	
 	public Source getSource(String name){
 		return getSoftwareKnowledge().getSource(name);
+	}
+
+	public Category getCatParent(int catId) {
+		return getSoftwareKnowledge().getCategory(catId).getParent();
+		
 	}
 }
