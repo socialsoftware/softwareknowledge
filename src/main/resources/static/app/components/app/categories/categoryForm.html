@@ -1,8 +1,38 @@
-<form novalidate class="simple-form">
+<!--  <form novalidate class="simple-form">
     Category Name: <input type="text" ng-model="$ctrl.name" /><br />
     Category Parent:  
     <select ng-options="category.fullName for category in $ctrl.categories | orderBy : 'fullName' " ng-model="$ctrl.selectedCategory">
       <option value="">Select Category Parent</option>
     </select>     
-   <button ng-click="$ctrl.createCategory()">Create</button>
-</form>
+   <button ng-click="$ctrl.createCategory()" >Create</button>
+</form>-->
+
+<div class="panel panel-primary" style="margin-top: 20px;">
+	<div class="panel-heading">
+		<h3 class="panel-title"><strong>Add New Category</strong></h3>
+	</div>
+	<div class="panel-body">
+		<form name="myForm" class="form-horizontal">
+			<div class="form-group">
+    			<label for="inputName" class="col-sm-2 control-label">Category Name</label>
+    			<div class="col-sm-4">
+    				<input type="text" name="inputName" class="form-control" ng-model="$ctrl.name" id="inputName" placeholder="Enter Category Name" required />
+				</div>
+    		
+  			</div>
+  			<div class="form-group">
+    			<label for="inputParent" class="col-sm-2 control-label">Category Parent</label>
+    			<div class="dropdown col-sm-4">
+  					<select class="form-control btn btn-default dropdown-toggle" aria-labelledby="dropdownMenu1" ng-options="category.fullName for category in $ctrl.categories | orderBy : 'fullName' " ng-model="$ctrl.selectedCategory"></select>
+						<option><a href="#">{{category.fullName}}</a></option>					
+				</div>
+  			</div>
+   			<div class="form-group">
+    			<div class="col-md-12">
+      				<button type="submit" class="btn btn-primary" ng-click="$ctrl.createCategory()">Create</button>
+					<button type="button" class="btn btn-default" ng-click="$ctrl.gotoCategories()">Back</button>
+				</div>
+  			</div>
+		</form>
+	</div>
+</div>

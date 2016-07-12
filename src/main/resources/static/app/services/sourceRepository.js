@@ -11,6 +11,10 @@ app.factory('sourceRepository', function($http) {
 		createSource : function(source) {
 			var url = "/source";
 			return $http.post(url, source);
+		},
+		removeSource : function(id) {
+			var url = "/source/" + id;
+			return $http.delete(url);
 		}
 	};
 });

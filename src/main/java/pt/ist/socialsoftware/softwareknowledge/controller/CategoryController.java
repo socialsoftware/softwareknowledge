@@ -53,15 +53,6 @@ public class CategoryController {
 		return new ResponseEntity<CategoryDTO>(categoryDTO, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/{id}/parent", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public ResponseEntity<CategoryDTO> getCatParent(@PathVariable("id") int catId) {
-		logger.debug("getCatParent:{}", catId);
-
-		ServiceInterface serviceInterface = ServiceInterface.getInstance();
-		CategoryDTO categories = serviceInterface.getCatParent(catId).getDTO();
-
-		return new ResponseEntity<CategoryDTO>(categories, HttpStatus.OK);
-	}
 	
 	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
 	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
@@ -71,6 +62,17 @@ public class CategoryController {
 		Category category = serviceInterface.createCategory(categoryDTO);
 
 		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
+	public ResponseEntity<CategoryDTO[]> removeCategory(@PathVariable("id") int catId) {
+		logger.debug("removeCategory catId:{}", catId);
+		
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		CategoryDTO[] categories = serviceInterface.removeCategory(catId).stream().map(c -> c.getDTO())
+				.toArray(size -> new CategoryDTO[size]);
+
+		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
 	}
 	
 	

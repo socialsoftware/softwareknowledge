@@ -12,13 +12,9 @@ app.factory('categoryRepository', function($http) {
 			var url = "/category";
 			return $http.post(url, category);
 		},
-		getSubCategories : function(id) {
-			var url = "/category" + id + "/sub";
-			return $http.get(url);
-		},
-		getCatParent : function(id) {
-			var url = "/category" + id + "/parent";
-			return $http.get(url);
+		removeCategory : function(id) {
+			var url = "/category/" + id;
+			return $http.delete(url);
 		}
 	};
 });

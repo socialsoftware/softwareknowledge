@@ -52,5 +52,16 @@ public class SourceController {
 		return new ResponseEntity<SourceDTO>(source.getDTO(), HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value="/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
+	public ResponseEntity<SourceDTO[]> removeSource(@PathVariable("id") int sourceId) {
+		logger.debug("removeSource sourceId:{}", sourceId);
+		
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		SourceDTO[] sources = serviceInterface.removeSource(sourceId).stream().map(c -> c.getDTO())
+				.toArray(size -> new SourceDTO[size]);
+
+		return new ResponseEntity<SourceDTO[]>(sources, HttpStatus.OK);
+	}
+	
 	
 }

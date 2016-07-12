@@ -1,5 +1,42 @@
-<button ng-link="['SourceForm']">Add New Source</button>
+<!--  <button ng-link="['SourceForm']">Add New Source</button>
 
 <div ng-repeat="source in $ctrl.sources">
 	<a ng-link="['SourceDetail', {id: source.sourceId}]">{{source.name}}</a>
+</div>
+-->
+<div class="row" style="margin-top: 20px;">
+	<div class="col-md-4 text-center">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Source List <span class="glyphicon glyphicon-list-alt"
+					aria-hidden="true"></span>
+			</div>
+			<table class="table text-center">
+				<thead>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div ng-repeat="source in $ctrl.sources">
+								<a ng-link="['SourceDetail', {id: source.sourceId}]">{{source.name}}</a>
+								<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" ng-click="$ctrl.removeSource(source.sourceId)" title="Eliminar">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-2 text-center">
+		<div class="btn-group btn-group-justified" role="group"
+			aria-label="...">
+			<div class="btn-group" role="group">
+				<button type="button" class="btn  btn-primary" ng-link="['SourceForm']">
+					Add New Source <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
+	</div>
 </div>

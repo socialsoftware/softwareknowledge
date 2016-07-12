@@ -33,7 +33,7 @@ public class SoftwareKnowledge {
 
 	public void addCategory(Category category) {
 		if (categorySet.stream()
-				.filter(c -> c.getCatId() == category.getCatId() || c.getName().equals(category.getName())).findFirst()
+				.filter(c -> c.getCatId() == category.getCatId() || c.getDTO().getFullName().equals(category.getDTO().getFullName())).findFirst()
 				.isPresent()) {
 			throw new SKException(SKErrorType.DUPLICATE_CATEGORY, category.getCatId() + ":" + category.getName());
 		}
@@ -153,6 +153,26 @@ public class SoftwareKnowledge {
 		for (Category c : getCategorySet()) {
 			if (c.getCatId() == catId) {
 				return c.getSubCategorySet();
+			}
+		}
+		return null;
+	}
+
+	public Set<Category> removeCategory(int catId) {
+		for(Category c : getCategorySet()){
+			if(c.getCatId() == catId){
+				getCategorySet().remove(c);
+				return getCategorySet();
+			}
+		}
+		return null;
+	}
+
+	public Set<Source> removeSource(int sourceId) {
+		for(Source s : getSourceSet()){
+			if(s.getSourceId() == sourceId){
+				getSourceSet().remove(s);
+				return getSourceSet();
 			}
 		}
 		return null;

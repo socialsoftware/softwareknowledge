@@ -1,5 +1,5 @@
 
-<form novalidate class="simple-form">
+<!--  <form novalidate class="simple-form">
 	Source Name: <input type="text" ng-model="$ctrl.name" /><br /> Source
 	Author: <input type="text" ng-model="$ctrl.author" /><br /> Source
 	Link: <input type="text" ng-model="$ctrl.link" /> <br /> Main
@@ -9,4 +9,51 @@
 	<button ng-click="$ctrl.createSource()">Create</button>
 
 
-</form>
+</form>-->
+<div class="panel panel-primary" style="margin-top: 20px;">
+	<div class="panel-heading">
+		<h3 class="panel-title"><strong>Add New Source</strong></h3>
+	</div>
+	<div class="panel-body">
+		<form name="myForm" class="form-horizontal">
+			<div class="form-group">
+				<label for="inputName" class="col-sm-2 control-label">Source Name:</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" ng-model="$ctrl.name" id="inputName" placeholder=" Enter Source Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputAuthor" class="col-sm-2 control-label">Author:</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" ng-model="$ctrl.author"
+						id="inputAuthor" placeholder="Enter Author Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputLink" class="col-sm-2 control-label">Link:</label>
+				<div class="col-sm-4">
+					<input type="url" name="input" class="form-control" ng-model="$ctrl.link"
+						id="inputLink" placeholder="Enter Source Link" required>
+				</div>
+				<div  role="alert">
+    				<span class="alert alert-danger" ng-show="myForm.input.$error.url">Not valid URL!</span>
+  				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputParent" class="col-sm-2 control-label">Main Category:</label>
+				<div class="dropdown col-md-3 ">
+					<select name="cat" class="form-control btn btn-default dropdown-toggle" aria-labelledby="dropdownMenu1"
+						ng-options="category.fullName for category in $ctrl.categories | orderBy :'fullName'" ng-model="$ctrl.selectedCategory" multiple required>
+					</select>
+					<option><a href="#">{{category.fullName}}</a></option>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-12">
+					<button type="submit" class="btn btn-primary" ng-click="$ctrl.createSource()">Create</button>
+					<button type="button" class="btn btn-default" ng-click="$ctrl.gotoSources()">Back</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

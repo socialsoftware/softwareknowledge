@@ -1,11 +1,46 @@
-<div ng-if="$ctrl.category">
-	<h3>{{$ctrl.category.fullName}}</h3>
+<!--  <div ng-if="$ctrl.category">
+	<h1>{{$ctrl.category.fullName}}</h1>
 	<div>
 		<label>Id: </label>{{$ctrl.category.catId}}
 	</div>
 	<div>
-		<label>Name: </label> <input ng-model="$ctrl.category.name"
+		<label>Name: </label> <input ng-model="$ctrl.editName"
 			placeholder="name" />
 	</div>
+	<button ng-click="$ctrl.save()">Save</button>
 	<button ng-click="$ctrl.gotoCategories()">Back</button>
+</div>-->
+
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title"><strong>Category Information</strong></h3>
+	</div>
+	<div class="panel-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Category ID:</label>
+				<div class="col-sm-6">
+					<p class="form-control-static">{{$ctrl.category.catId}}</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputName" class="col-sm-2 control-label">Category
+					Name:</label>
+				<div class="col-sm-4 col-md-4">
+					<input type="name" class="form-control" id="inputName"
+						placeholder="Category Name">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-1">
+					<button type="button" class="btn btn-primary"
+						ng-click="$ctrl.save()">Save</button>
+				</div>
+				<div class="col-md-1">
+					<button type="button" class="btn btn-default"
+						ng-click="$ctrl.gotoCategories()">Back</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>

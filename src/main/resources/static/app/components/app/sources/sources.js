@@ -1,6 +1,6 @@
 angular.module('sources', [])
 		.component('sources', {
-			template : '<h2>Sources</h2><ng-outlet></ng-outlet>',
+			template : '<ng-outlet></ng-outlet>',
 			$routeConfig : [ {
 				path : '/',
 				name : 'SourceList',
@@ -33,6 +33,9 @@ angular.module('sources', [])
 		
 		.component('sourceForm', {
 			templateUrl : "app/components/app/sources/sourceForm.html",
+			bindings : {
+				$router : '<'
+			},
 			controller : SourceFormComponent
 		});
 
@@ -49,6 +52,13 @@ function SourceListComponent(sourceRepository) {
 	this.isSelected = function(source) {
 		return (source.sourceId == selectedId);
 	};	
+	
+	this.removeSource = function(id) {
+		sourceRepository.removeSource(id).then(function(response) {
+			$ctrl.sources = response.data;
+				
+			});
+	};
 	
 }
 
@@ -87,34 +97,25 @@ function SourceFormComponent(sourceRepository,categoryRepository){
 	};
 
 	
-	this.getParent = function(id) {
-		categoryRepository.getCatParent(id).then(function(response){
-			$ctrl.parent = response.data;
-		});
-		
-	};
-	
-	this.getSub = function(id) {
-		categoryRepository.getSubCategories(id).then(function(response){
-			$ctrl.sub = response.data;
-		});
-	};
-	
 	
 	this.createSource = function() {
 		sourceRepository.createSource({
 			"name" : this.name,
 			"author" : this.author,
 			"link" : this.link,
-			"catList" : this.selectedCategory,
-			"subCatList" : this.subCategories
+			"catList" : this.selectedCategory
 		}).then(function(response) {
-			
+			alert("Well Done! Source:"+response.data.name + "  inserted successfully");
 			sourceRepository.getSources().then(function(response) {
 				$ctrl.sources = response.data;
 			});
-		}, function(response) {
-			alert(response.data.type + '(' + response.data.value + ')');
 		});	
+	};
+	
+	this.gotoSources = function() {
+		var sourceSId = this.source && this.source.sourceId;
+		this.$router.navigate([ 'SourceList', {
+			sourceId : sourceSId
+		} ]);
 	};
 }

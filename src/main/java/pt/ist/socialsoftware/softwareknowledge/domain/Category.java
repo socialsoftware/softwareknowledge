@@ -13,7 +13,7 @@ public class Category {
 	private Set<Category> subCategorySet;
 	private Category parent;
 	private Set<Source> sourceWithCatSet;
-	private static int catIdCounter = 0;
+	private static int catIdCounter = 1;
 
 	public Category(SoftwareKnowledge softwareKnowledge, String name, Category parent) {
 

@@ -81,4 +81,12 @@ public class ServiceInterface {
 		return getSoftwareKnowledge().getCategory(catId).getParent();
 
 	}
+
+	public Set<Category> removeCategory(int catId) {
+		return getSoftwareKnowledge().removeCategory(catId);
+	}
+
+	public Set<Source> removeSource(int sourceId) {
+		return getSoftwareKnowledge().removeSource(sourceId);
+	}
 }
