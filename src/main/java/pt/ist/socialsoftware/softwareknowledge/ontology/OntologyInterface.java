@@ -193,7 +193,7 @@ public class OntologyInterface {
 		Resource cat1 = model.createResource(OntologyManager.getNS() + category.getName(), 
 						model.getOntClass("category"));
 		
-		model.removeAll(null, null, cat1);
+		model.removeAll(cat1, null, null);
 			
 	}
 	

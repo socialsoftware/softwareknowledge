@@ -81,11 +81,17 @@ function CategoryDetailComponent(categoryRepository) {
 	};
 	
 	this.save = function(){
-		
-		$ctrl.category.name = $ctrl.editName;
-		$ctrl.gotoCategories();
-	};
-	
+			categoryRepository.updateCategory({
+				"name" : this.name,
+				"catId" : this.category.catId
+			}).then(function(response) {
+				categoryRepository.getCategories().then(function(response) {
+					$ctrl.categories = response.data;
+					$ctrl.gotoCategories();
+				});
+			});
+		};
+			
 	this.gotoCategories = function() {
 		var categoryCatId = this.category && this.category.catId;
 		this.$router.navigate([ 'CategoryList', {

@@ -15,6 +15,7 @@ import pt.ist.socialsoftware.softwareknowledge.domain.Category;
 import pt.ist.socialsoftware.softwareknowledge.service.ServiceInterface;
 import pt.ist.socialsoftware.softwareknowledge.service.dto.CategoryDTO;
 
+
 @RestController
 @RequestMapping(value = "/category")
 public class CategoryController {
@@ -25,23 +26,12 @@ public class CategoryController {
 		
 		
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
-		logger.debug("getCategories values:{}", serviceInterface.getCategories());
 		CategoryDTO[] categories = serviceInterface.getCategories().stream().map(c -> c.getDTO())
 				.toArray(size -> new CategoryDTO[size]);
 
 		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
 	}
 	
-	/*@RequestMapping(value = "/{id}/sub", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-	public ResponseEntity<CategoryDTO[]> getSubCategories(@PathVariable("id") int catId) {
-		logger.debug("getSubCategoriescatId:{}", catId);
-
-		ServiceInterface serviceInterface = ServiceInterface.getInstance();
-		CategoryDTO[] categories = serviceInterface.getSubCategories(catId).stream().map(c -> c.getDTO())
-				.toArray(size -> new CategoryDTO[size]);
-
-		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
-	}*/
 
 	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<CategoryDTO> getCategory(@PathVariable("id") int catId) {
@@ -60,7 +50,7 @@ public class CategoryController {
 		
 		ServiceInterface serviceInterface = ServiceInterface.getInstance();
 		Category category = serviceInterface.createCategory(categoryDTO);
-
+		
 		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.CREATED);
 	}
 	
@@ -75,6 +65,15 @@ public class CategoryController {
 		return new ResponseEntity<CategoryDTO[]>(categories, HttpStatus.OK);
 	}
 	
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+	public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO) {
+		logger.debug("updateCategory name:{}, catId:{}", categoryDTO.getName(), categoryDTO.getCatId());
+		
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		Category category = serviceInterface.updateCategory(categoryDTO);
+
+		return new ResponseEntity<CategoryDTO>(category.getDTO(), HttpStatus.OK);
+	}
 	
-	
+
 }

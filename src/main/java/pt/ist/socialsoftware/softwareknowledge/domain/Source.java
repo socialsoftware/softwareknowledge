@@ -8,16 +8,41 @@ import pt.ist.socialsoftware.softwareknowledge.ontology.OntologyInterface;
 import pt.ist.socialsoftware.softwareknowledge.service.dto.CategoryDTO;
 import pt.ist.socialsoftware.softwareknowledge.service.dto.SourceDTO;
 
+
+//@Entity
+//@Table(name="sources")
 public class Source {
 	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+//	private long id;
+	
 	private SoftwareKnowledge softwareknowledge;
+	
+//	@NotNull
+//	@Column(name="author")
 	private String author;
-	private Integer sourceId;
+	
+//	@NotNull
+//	@Column(name="sourceId")
+	private int sourceId;
+	
+//	@NotNull
+//	@Column(name="insertDate")
 	private String insertDate;
+	
+//	@NotNull
+//	@Column(name="sourceName")
 	private String name;
+	
+	//@ManyToMany(mappedBy="sourceWithCatSet",fetch=FetchType.EAGER)
 	private Set<Category> catInSourceSet;
 	private Set<RelatedSource> relatedSourceSet;
+	
+//	@NotNull
+//	@Column(name="link")
 	private String link;
+	
 	private static int sourceIdCounter=0;
 
 	public Source() {
@@ -33,7 +58,7 @@ public class Source {
 		setLink(link);
 		catInSourceSet = new HashSet<Category>();
 		relatedSourceSet = new HashSet<RelatedSource>();
-		softwareKnowledge.addSource(this);
+		//softwareKnowledge.addSource(this);
 		OntologyInterface.getInstance().addSource(this);
 	}
 
@@ -45,7 +70,7 @@ public class Source {
 		setLink(link);
 		setCatInSourceSet(catList);
 		relatedSourceSet = new HashSet<RelatedSource>();
-		softwareKnowledge.addSource(this);
+	//	softwareKnowledge.addSource(this);
 		OntologyInterface.getInstance().addSource(this);
 	}
 

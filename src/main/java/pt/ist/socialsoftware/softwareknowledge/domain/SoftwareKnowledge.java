@@ -3,9 +3,21 @@ package pt.ist.socialsoftware.softwareknowledge.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import pt.ist.socialsoftware.softwareknowledge.utils.exception.SKErrorType;
 import pt.ist.socialsoftware.softwareknowledge.utils.exception.SKException;
 
+
+
+
+@Entity
+@Table(name = "softwareKnowledge")
 public class SoftwareKnowledge {
 	static private SoftwareKnowledge instance = null;
 
@@ -19,15 +31,23 @@ public class SoftwareKnowledge {
 	private SoftwareKnowledge() {
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
+	@OneToMany(mappedBy = "softwareKnowledge",targetEntity=Category.class)
 	private Set<Category> categorySet = new HashSet<Category>();
-	private Set<Source> sourceSet = new HashSet<Source>();
-	private Set<RelatedSource> relatedSourceSet = new HashSet<RelatedSource>();
-	private Set<RelatedCategory> relatedCategorySet = new HashSet<RelatedCategory>();
+	
+	
+	
+	//private Set<Source> sourceSet = new HashSet<Source>();
+	//private Set<RelatedSource> relatedSourceSet = new HashSet<RelatedSource>();
+	//private Set<RelatedCategory> relatedCategorySet = new HashSet<RelatedCategory>();
 
 	public void clean() {
 		categorySet.clear();
-		sourceSet.clear();
-		relatedSourceSet.clear();
+		//sourceSet.clear();
+		//relatedSourceSet.clear();
 
 	}
 
@@ -41,16 +61,16 @@ public class SoftwareKnowledge {
 		categorySet.add(category);
 	}
 
-	public void addSource(Source source) {
-		if (sourceSet.stream()
-				.filter(s -> s.getSourceId() == source.getSourceId() || s.getName().equals(source.getName()))
-				.findFirst().isPresent()) {
-			throw new SKException(SKErrorType.DUPLICATE_SOURCE, source.getSourceId() + ":" + source.getName());
-		}
-
-		sourceSet.add(source);
-
-	}
+//	public void addSource(Source source) {
+//		if (sourceSet.stream()
+//				.filter(s -> s.getSourceId() == source.getSourceId() || s.getName().equals(source.getName()))
+//				.findFirst().isPresent()) {
+//			throw new SKException(SKErrorType.DUPLICATE_SOURCE, source.getSourceId() + ":" + source.getName());
+//		}
+//
+//		sourceSet.add(source);
+//
+//	}
 
 	public void addRelatedSource(Source s1, Source s2, SourceProperty p) {
 		for (RelatedSource r : getRelatedSourceSet()) {
@@ -118,19 +138,19 @@ public class SoftwareKnowledge {
 	}
 
 	public Set<RelatedCategory> getRelatedCategorySet() {
-		return relatedCategorySet;
+		return null;//relatedCategorySet;
 	}
 
 	public void setRelatedCategorySet(Set<RelatedCategory> relatedCategorySet) {
-		this.relatedCategorySet = relatedCategorySet;
+		//this.relatedCategorySet = relatedCategorySet;
 	}
 
 	public Set<RelatedSource> getRelatedSourceSet() {
-		return relatedSourceSet;
+		return null;//relatedSourceSet;
 	}
 
 	public void setRelatedSourceSet(Set<RelatedSource> relatedSourceSet) {
-		this.relatedSourceSet = relatedSourceSet;
+		//this.relatedSourceSet = relatedSourceSet;
 	}
 
 	public void setCategorySet(Set<Category> categorySet) {
@@ -138,7 +158,7 @@ public class SoftwareKnowledge {
 	}
 
 	public void setSourceSet(Set<Source> sourceSet) {
-		this.sourceSet = sourceSet;
+		//this.sourceSet = sourceSet;
 	}
 
 	public Set<Category> getCategorySet() {
@@ -146,7 +166,7 @@ public class SoftwareKnowledge {
 	}
 
 	public Set<Source> getSourceSet() {
-		return sourceSet;
+		return null;//sourceSet;
 	}
 
 	public Set<Category> getSubCategorySet(int catId) {
@@ -177,5 +197,27 @@ public class SoftwareKnowledge {
 		}
 		return null;
 	}
+
+	public Category updateCategory(String name, int catId) {
+		for(Category c : getCategorySet()){
+			if(c.getCatId() == catId){
+				c.setName(name);
+				return c;
+			}
+		}
+		return null;
+	}
+
+	public Source updateSource(String name, int sourceId) {
+		for(Source s : getSourceSet()){
+			if(s.getSourceId() == sourceId){
+				s.setName(name);
+				return s;
+			}
+		}
+		return null;
+	}
+
+
 
 }

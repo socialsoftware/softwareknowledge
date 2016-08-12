@@ -63,5 +63,15 @@ public class SourceController {
 		return new ResponseEntity<SourceDTO[]>(sources, HttpStatus.OK);
 	}
 	
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+	public ResponseEntity<SourceDTO> updateSource(@RequestBody SourceDTO sourceDTO) {
+		logger.debug("updateSource name:{}, catId:{}, author:{}", sourceDTO.getName(), sourceDTO.getSourceId(), sourceDTO.getAuthor());
+		
+		ServiceInterface serviceInterface = ServiceInterface.getInstance();
+		Source source = serviceInterface.updateSource(sourceDTO);
+
+		return new ResponseEntity<SourceDTO>(source.getDTO(), HttpStatus.OK);
+	}
+	
 	
 }

@@ -15,6 +15,10 @@ app.factory('categoryRepository', function($http) {
 		removeCategory : function(id) {
 			var url = "/category/" + id;
 			return $http.delete(url);
+		},
+		updateCategory : function(category){
+			var url = "/category/";
+			return $http.put(url,category);
 		}
 	};
 });

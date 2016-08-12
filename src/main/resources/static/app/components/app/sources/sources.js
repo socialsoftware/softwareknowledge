@@ -72,6 +72,20 @@ function SourceDetailComponent(sourceRepository) {
 			$ctrl.source = source.data;
 		});
 	};
+	
+	this.save = function() {
+		sourceRepository.updateSource({
+			"name" : this.name,
+			"sourceId" : this.source.sourceId,
+			"author" : this.source.author
+		}).then(function(response) {
+			sourceRepository.getSources().then(function(response) {
+				$ctrl.sources = response.data;
+				$ctrl.gotoSources();
+			});
+		});
+		
+	};
 
 	this.gotoSources = function() {
 		var sourceSId = this.source && this.source.sourceId;
@@ -105,7 +119,7 @@ function SourceFormComponent(sourceRepository,categoryRepository){
 			"link" : this.link,
 			"catList" : this.selectedCategory
 		}).then(function(response) {
-			alert("Well Done! Source:"+response.data.name + "  inserted successfully");
+			//alert("Well Done! Source:"+response.data.name + "  inserted successfully");
 			sourceRepository.getSources().then(function(response) {
 				$ctrl.sources = response.data;
 			});
